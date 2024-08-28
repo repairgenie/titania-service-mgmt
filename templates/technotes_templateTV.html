@@ -1,0 +1,14 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the technotes_init() hook (in hooks/technotes.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="technotes-technote_ID-<%%VALUE(technote_ID)%%>" class="technotes-technote_ID text-right"><%%SELECT%%><%%VALUE(technote_ID)%%><%%ENDSELECT%%></td>
+		<td id="technotes-technote_tech-<%%VALUE(technote_ID)%%>" class="technotes-technote_tech"><%%SELECT%%><%%VALUE(technote_tech)%%><%%ENDSELECT%%></td>
+		<td id="technotes-technote_note-<%%VALUE(technote_ID)%%>" class="technotes-technote_note"><%%SELECT%%><%%VALUE(technote_note)%%><%%ENDSELECT%%></td>
+		<td id="technotes-technote_author-<%%VALUE(technote_ID)%%>" class="technotes-technote_author"><%%SELECT%%><%%VALUE(technote_author)%%><%%ENDSELECT%%></td>
+		<td id="technotes-technote_timestamp-<%%VALUE(technote_ID)%%>" class="technotes-technote_timestamp"><%%SELECT%%><%%VALUE(technote_timestamp)%%><%%ENDSELECT%%></td>
+		<td id="technotes-technote_editor-<%%VALUE(technote_ID)%%>" class="technotes-technote_editor"><%%SELECT%%><%%VALUE(technote_editor)%%><%%ENDSELECT%%></td>
+		<td id="technotes-technote_editorts-<%%VALUE(technote_ID)%%>" class="technotes-technote_editorts"><%%SELECT%%><%%VALUE(technote_editorts)%%><%%ENDSELECT%%></td>

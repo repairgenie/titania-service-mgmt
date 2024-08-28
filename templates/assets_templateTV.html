@@ -1,0 +1,14 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the assets_init() hook (in hooks/assets.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="assets-asset_ID-<%%VALUE(asset_ID)%%>" class="assets-asset_ID text-right"><%%SELECT%%><%%VALUE(asset_ID)%%><%%ENDSELECT%%></td>
+		<td id="assets-asset_client-<%%VALUE(asset_ID)%%>" class="assets-asset_client"><%%SELECT%%><%%VALUE(asset_client)%%><%%ENDSELECT%%></td>
+		<td id="assets-asset_type-<%%VALUE(asset_ID)%%>" class="assets-asset_type"><%%SELECT%%><%%VALUE(asset_type)%%><%%ENDSELECT%%></td>
+		<td id="assets-asset_mfr-<%%VALUE(asset_ID)%%>" class="assets-asset_mfr"><%%SELECT%%><%%VALUE(asset_mfr)%%><%%ENDSELECT%%></td>
+		<td id="assets-asset_model-<%%VALUE(asset_ID)%%>" class="assets-asset_model"><%%SELECT%%><%%VALUE(asset_model)%%><%%ENDSELECT%%></td>
+		<td id="assets-asset_serial-<%%VALUE(asset_ID)%%>" class="assets-asset_serial"><%%SELECT%%><%%VALUE(asset_serial)%%><%%ENDSELECT%%></td>
+		<td id="assets-asset_IMEI-<%%VALUE(asset_ID)%%>" class="assets-asset_IMEI"><%%SELECT%%><%%VALUE(asset_IMEI)%%><%%ENDSELECT%%></td>

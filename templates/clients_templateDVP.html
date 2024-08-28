@@ -1,0 +1,156 @@
+<!-- Edit this file to change the layout of the detail view print preview page -->
+
+
+<div class="panel-heading"><h3 class="panel-title">
+	<strong><%%DETAIL_VIEW_TITLE%%></strong>
+	<div class="hidden-print pull-right">
+		<div class="btn-group">
+			<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> <%%TRANSLATION(Print)%%></button>
+			<button type="submit" id="back" title="<%%TRANSLATION(Cancel Printing)%%>" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> <%%TRANSLATION(Cancel Printing)%%></button>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</h3></div>
+
+<div class="panel-body">
+	<fieldset class="form-horizontal">
+		<!-- Field: ID -->
+		<div class="form-group clients-id" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">ID</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(id)%%></div>
+			</div>
+		</div>
+		<!-- Field: Name -->
+		<div class="form-group clients-name" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Name</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(name)%%></div>
+			</div>
+		</div>
+		<!-- Field: Contact -->
+		<div class="form-group clients-contact" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Contact</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(contact)%%></div>
+			</div>
+		</div>
+		<!-- Field: Title -->
+		<div class="form-group clients-title" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Title</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(title)%%></div>
+			</div>
+		</div>
+		<!-- Field: Address -->
+		<div class="form-group clients-address" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Address</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(address)%%></div>
+			</div>
+		</div>
+		<!-- Field: City -->
+		<div class="form-group clients-city" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">City</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(city)%%></div>
+			</div>
+		</div>
+		<!-- Field: Country -->
+		<div class="form-group clients-country" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Country</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(country)%%></div>
+			</div>
+		</div>
+		<!-- Field: Phone -->
+		<div class="form-group clients-phone" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Phone</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(phone)%%></div>
+			</div>
+		</div>
+		<!-- Field: Email -->
+		<div class="form-group clients-email" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Email</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(email)%%></div>
+			</div>
+		</div>
+		<!-- Field: Website -->
+		<div class="form-group clients-website" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Website</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><a id="website-link" href="link.php?t=clients&f=website&i=<%%VALUE(id)%%>" target="_blank"><%%VALUE(website)%%></a><script>jQuery(function() { var e_website = '<%%VALUE(website)%%>'; if(e_website == '' || e_website == '&nbsp;' || e_website == 'blank.gif') jQuery('#website-link').hide(); });</script></div>
+			</div>
+		</div>
+		<!-- Field: Comments -->
+		<div class="form-group clients-comments" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Comments</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(comments)%%></div>
+			</div>
+		</div>
+		<!-- Field: Unpaid sales -->
+		<div class="form-group clients-unpaid_sales" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Unpaid sales</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(unpaid_sales)%%></div>
+			</div>
+		</div>
+		<!-- Field: Paid sales -->
+		<div class="form-group clients-paid_sales" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Paid sales</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(paid_sales)%%></div>
+			</div>
+		</div>
+		<!-- Field: Total sales -->
+		<div class="form-group clients-total_sales" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Total sales</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(total_sales)%%></div>
+			</div>
+		</div>
+	</fieldset>
+</div>
+<script>
+	$j(function() {
+		// render read-only checkboxes in DVP
+		$j('form input[type=checkbox]:not(.hidden):checked')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-check"></i>');
+		$j('form input[type=checkbox]:not(.hidden):not(:checked)')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-unchecked"></i>')
+	})
+</script>
+<!-- child records -->
+<div class="panel-body">
+	<div id="clients-children"></div>
+</div>
+
+<script>
+	$j(function() {
+		/* prevent loading child records in multiple DVP */
+		if($j('[id=clients-children]').length > 1) return;
+
+		post(
+			'parent-children.php', {
+				ParentTable: 'clients',
+				SelectedID: '<%%VALUE(id)%%>',
+				Operation: 'show-children-printable'
+			},
+			'clients-children',
+			'disable-element',
+			'loading-element',
+			apply_persisting_children
+		);
+
+		$j('form').on('click', '#children-tabs button[data-target]', function() {
+			$j(this).toggleClass('active');
+			persist_expanded_child($j(this).attr('id'));
+		});
+	})
+</script>
+

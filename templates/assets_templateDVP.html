@@ -1,0 +1,107 @@
+<!-- Edit this file to change the layout of the detail view print preview page -->
+
+
+<div class="panel-heading"><h3 class="panel-title">
+	<strong><%%DETAIL_VIEW_TITLE%%></strong>
+	<div class="hidden-print pull-right">
+		<div class="btn-group">
+			<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> <%%TRANSLATION(Print)%%></button>
+			<button type="submit" id="back" title="<%%TRANSLATION(Cancel Printing)%%>" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> <%%TRANSLATION(Cancel Printing)%%></button>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</h3></div>
+
+<div class="panel-body">
+	<fieldset class="form-horizontal">
+		<!-- Field: Asset ID -->
+		<div class="form-group assets-asset_ID" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Asset ID</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(asset_ID)%%></div>
+			</div>
+		</div>
+		<!-- Field: Client Owner -->
+		<div class="form-group assets-asset_client" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Client Owner</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="asset_client<%%RND1%%>"><%%COMBOTEXT(asset_client)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Asset type -->
+		<div class="form-group assets-asset_type" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Asset type</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(asset_type)%%></div>
+			</div>
+		</div>
+		<!-- Field: Manufacturer -->
+		<div class="form-group assets-asset_mfr" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Manufacturer</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(asset_mfr)%%></div>
+			</div>
+		</div>
+		<!-- Field: Asset model -->
+		<div class="form-group assets-asset_model" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Asset model</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(asset_model)%%></div>
+			</div>
+		</div>
+		<!-- Field: Serial Number -->
+		<div class="form-group assets-asset_serial" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Serial Number</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(asset_serial)%%></div>
+			</div>
+		</div>
+		<!-- Field: Asset IMEI -->
+		<div class="form-group assets-asset_IMEI" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Asset IMEI</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(asset_IMEI)%%></div>
+			</div>
+		</div>
+	</fieldset>
+</div>
+<script>
+	$j(function() {
+		// render read-only checkboxes in DVP
+		$j('form input[type=checkbox]:not(.hidden):checked')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-check"></i>');
+		$j('form input[type=checkbox]:not(.hidden):not(:checked)')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-unchecked"></i>')
+	})
+</script>
+<!-- child records -->
+<div class="panel-body">
+	<div id="assets-children"></div>
+</div>
+
+<script>
+	$j(function() {
+		/* prevent loading child records in multiple DVP */
+		if($j('[id=assets-children]').length > 1) return;
+
+		post(
+			'parent-children.php', {
+				ParentTable: 'assets',
+				SelectedID: '<%%VALUE(asset_ID)%%>',
+				Operation: 'show-children-printable'
+			},
+			'assets-children',
+			'disable-element',
+			'loading-element',
+			apply_persisting_children
+		);
+
+		$j('form').on('click', '#children-tabs button[data-target]', function() {
+			$j(this).toggleClass('active');
+			persist_expanded_child($j(this).attr('id'));
+		});
+	})
+</script>
+

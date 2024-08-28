@@ -1,0 +1,16 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the workorders_init() hook (in hooks/workorders.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="workorders-wo_ID-<%%VALUE(wo_ID)%%>" class="workorders-wo_ID text-right"><%%VALUE(wo_ID)%%></td>
+		<td id="workorders-wo_createdby-<%%VALUE(wo_ID)%%>" class="workorders-wo_createdby"><%%VALUE(wo_createdby)%%></td>
+		<td id="workorders-wo_datecreated-<%%VALUE(wo_ID)%%>" class="workorders-wo_datecreated"><%%VALUE(wo_datecreated)%%></td>
+		<td id="workorders-wo_Status-<%%VALUE(wo_ID)%%>" class="workorders-wo_Status"><%%VALUE(wo_Status)%%></td>
+		<td id="workorders-wo_assignedto-<%%VALUE(wo_ID)%%>" class="workorders-wo_assignedto"><%%VALUE(wo_assignedto)%%></td>
+		<td id="workorders-wo_client-<%%VALUE(wo_ID)%%>" class="workorders-wo_client"><%%VALUE(wo_client)%%></td>
+		<td id="workorders-wo_ticket-<%%VALUE(wo_ID)%%>" class="workorders-wo_ticket"><%%VALUE(wo_ticket)%%></td>
+		<td id="workorders-wo_asset-<%%VALUE(wo_ID)%%>" class="workorders-wo_asset"><%%VALUE(wo_asset)%%></td>
+		<td id="workorders-wo_Title-<%%VALUE(wo_ID)%%>" class="workorders-wo_Title"><%%VALUE(wo_Title)%%></td>

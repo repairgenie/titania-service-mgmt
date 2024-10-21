@@ -91,6 +91,17 @@
 
 			return $data;
 		},
+		'supportcase' => function($data, $options = []) {
+			if(isset($data['case_client'])) $data['case_client'] = pkGivenLookupText($data['case_client'], 'supportcase', 'case_client');
+			if(isset($data['case_call'])) $data['case_call'] = pkGivenLookupText($data['case_call'], 'supportcase', 'case_call');
+
+			return $data;
+		},
+		'supportcase_notes' => function($data, $options = []) {
+			if(isset($data['sc_notecase'])) $data['sc_notecase'] = pkGivenLookupText($data['sc_notecase'], 'supportcase_notes', 'sc_notecase');
+
+			return $data;
+		},
 	];
 
 	// accept a record as an assoc array, return a boolean indicating whether to import or skip record
@@ -109,6 +120,8 @@
 		'asset_notes' => function($data, $options = []) { return true; },
 		'call_logs' => function($data, $options = []) { return true; },
 		'call_notes' => function($data, $options = []) { return true; },
+		'supportcase' => function($data, $options = []) { return true; },
+		'supportcase_notes' => function($data, $options = []) { return true; },
 	];
 
 	/*

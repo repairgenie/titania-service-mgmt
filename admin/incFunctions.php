@@ -204,6 +204,20 @@
 					'group' => $tg[4],
 					'homepageShowCount' => 0
 				],
+				'supportcase' => [
+					'Caption' => 'Support Cases',
+					'Description' => '',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[4],
+					'homepageShowCount' => 0
+				],
+				'supportcase_notes' => [
+					'Caption' => 'Supportcase notes',
+					'Description' => '',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[4],
+					'homepageShowCount' => 0
+				],
 		];
 
 		if($skip_authentication || getLoggedAdmin()) return $all_tables;
@@ -234,6 +248,8 @@
 			'asset_notes' => ['Asset notes', '', 'table.gif', 'Work Management'],
 			'call_logs' => ['Call Logs', '', 'table.gif', 'Call Management'],
 			'call_notes' => ['Call Notes', '', 'table.gif', 'Call Management'],
+			'supportcase' => ['Support Cases', '', 'table.gif', 'Call Management'],
+			'supportcase_notes' => ['Supportcase notes', '', 'table.gif', 'Call Management'],
 		];
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
@@ -1817,6 +1833,115 @@
 						],
 					],
 				],
+				'supportcase' => [
+					'case_ID' => [
+						'appgini' => "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+						'info' => [
+							'caption' => 'Case ID',
+							'description' => '',
+						],
+					],
+					'case_number' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'Case Number',
+							'description' => '',
+						],
+					],
+					'case_status' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'Status',
+							'description' => '',
+						],
+					],
+					'case_client' => [
+						'appgini' => "INT UNSIGNED NULL",
+						'info' => [
+							'caption' => 'Client',
+							'description' => '',
+						],
+					],
+					'case_call' => [
+						'appgini' => "INT NULL",
+						'info' => [
+							'caption' => 'Related Call',
+							'description' => '',
+						],
+					],
+					'case_datetime' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'Date/Time Opened: ',
+							'description' => '',
+						],
+					],
+					'case_openedby' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'Opened By: ',
+							'description' => '',
+						],
+					],
+					'case_external' => [
+						'appgini' => "VARCHAR(128) NULL",
+						'info' => [
+							'caption' => 'External/Vendor Ticket Dispatch Number',
+							'description' => '',
+						],
+					],
+					'case_subject' => [
+						'appgini' => "VARCHAR(255) NULL",
+						'info' => [
+							'caption' => 'Subject/Short Description',
+							'description' => '',
+						],
+					],
+					'case_description' => [
+						'appgini' => "LONGTEXT NULL",
+						'info' => [
+							'caption' => 'Case description',
+							'description' => '',
+						],
+					],
+				],
+				'supportcase_notes' => [
+					'sc_noteID' => [
+						'appgini' => "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+						'info' => [
+							'caption' => 'Sc noteID',
+							'description' => '',
+						],
+					],
+					'sc_notedatetime' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'Created on:',
+							'description' => '',
+						],
+					],
+					'sc_noteauthor' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'Created By: ',
+							'description' => '',
+						],
+					],
+					'sc_notecase' => [
+						'appgini' => "INT NULL",
+						'info' => [
+							'caption' => 'Related Case',
+							'description' => '',
+						],
+					],
+					'sc_notedetails' => [
+						'appgini' => "LONGTEXT NULL",
+						'info' => [
+							'caption' => 'Details',
+							'description' => '',
+						],
+					],
+				],
 			];
 		}
 
@@ -2883,6 +3008,13 @@
 			'call_notes' => [
 				'call_logs' => ['callnote_call'],
 			],
+			'supportcase' => [
+				'clients' => ['case_client'],
+				'call_logs' => ['case_call'],
+			],
+			'supportcase_notes' => [
+				'supportcase' => ['sc_notecase'],
+			],
 		];
 
 		return isset($parents[$table]) ? $parents[$table] : [];
@@ -2961,6 +3093,10 @@
 			'call_logs' => [
 			],
 			'call_notes' => [
+			],
+			'supportcase' => [
+			],
+			'supportcase_notes' => [
 			],
 		];
 	}
@@ -3154,6 +3290,13 @@
 			],
 			'call_notes' => [
 				'callnote_call' => 'SELECT `call_logs`.`call_ID`, IF(CHAR_LENGTH(`call_logs`.`call_ID`) || CHAR_LENGTH(`call_logs`.`call_datetime`), CONCAT_WS(\'\', `call_logs`.`call_ID`, \' : \', `call_logs`.`call_datetime`), \'\') FROM `call_logs` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`call_logs`.`call_client` LEFT JOIN `workorders` as workorders1 ON `workorders1`.`wo_ID`=`call_logs`.`call_workorder` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`call_logs`.`call_asset` LEFT JOIN `invoice` as invoice1 ON `invoice1`.`id`=`call_logs`.`call_invoice` ORDER BY 2',
+			],
+			'supportcase' => [
+				'case_client' => 'SELECT `clients`.`id`, IF(CHAR_LENGTH(`clients`.`id`) || CHAR_LENGTH(`clients`.`name`), CONCAT_WS(\'\', `clients`.`id`, \' : \', `clients`.`name`), \'\') FROM `clients` ORDER BY 2',
+				'case_call' => 'SELECT `call_logs`.`call_ID`, IF(CHAR_LENGTH(`call_logs`.`call_ID`) || CHAR_LENGTH(`call_logs`.`call_datetime`), CONCAT_WS(\'\', `call_logs`.`call_ID`, \' : \', `call_logs`.`call_datetime`), \'\') FROM `call_logs` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`call_logs`.`call_client` LEFT JOIN `workorders` as workorders1 ON `workorders1`.`wo_ID`=`call_logs`.`call_workorder` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`call_logs`.`call_asset` LEFT JOIN `invoice` as invoice1 ON `invoice1`.`id`=`call_logs`.`call_invoice` ORDER BY 2',
+			],
+			'supportcase_notes' => [
+				'sc_notecase' => 'SELECT `supportcase`.`case_ID`, IF(CHAR_LENGTH(`supportcase`.`case_number`) || CHAR_LENGTH(`supportcase`.`case_subject`), CONCAT_WS(\'\', `supportcase`.`case_number`, \' : \', `supportcase`.`case_subject`), \'\') FROM `supportcase` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`supportcase`.`case_client` LEFT JOIN `call_logs` as call_logs1 ON `call_logs1`.`call_ID`=`supportcase`.`case_call` ORDER BY 2',
 			],
 		];
 

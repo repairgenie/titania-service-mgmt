@@ -20,9 +20,9 @@
 	$x->QueryFieldsTV = [
 		"IF(    CHAR_LENGTH(`call_logs1`.`call_ID`) || CHAR_LENGTH(`call_logs1`.`call_datetime`), CONCAT_WS('',   `call_logs1`.`call_ID`, ' : ', `call_logs1`.`call_datetime`), '') /* Related Call:  */" => "callnote_call",
 		"`call_notes`.`callnote_ID`" => "callnote_ID",
-		"`call_notes`.`callnote_datetime`" => "callnote_datetime",
-		"`call_notes`.`callnote_loggedby`" => "callnote_loggedby",
-		"`call_notes`.`callnote_note`" => "callnote_note",
+		"if(CHAR_LENGTH(`call_notes`.`callnote_datetime`)>64, concat(left(`call_notes`.`callnote_datetime`,64),' ...'), `call_notes`.`callnote_datetime`)" => "callnote_datetime",
+		"if(CHAR_LENGTH(`call_notes`.`callnote_loggedby`)>64, concat(left(`call_notes`.`callnote_loggedby`,64),' ...'), `call_notes`.`callnote_loggedby`)" => "callnote_loggedby",
+		"if(CHAR_LENGTH(`call_notes`.`callnote_note`)>128, concat(left(`call_notes`.`callnote_note`,128),' ...'), `call_notes`.`callnote_note`)" => "callnote_note",
 	];
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = [
@@ -54,9 +54,9 @@
 	$x->QueryFieldsQS = [
 		"IF(    CHAR_LENGTH(`call_logs1`.`call_ID`) || CHAR_LENGTH(`call_logs1`.`call_datetime`), CONCAT_WS('',   `call_logs1`.`call_ID`, ' : ', `call_logs1`.`call_datetime`), '') /* Related Call:  */" => "callnote_call",
 		"`call_notes`.`callnote_ID`" => "callnote_ID",
-		"`call_notes`.`callnote_datetime`" => "callnote_datetime",
-		"`call_notes`.`callnote_loggedby`" => "callnote_loggedby",
-		"`call_notes`.`callnote_note`" => "callnote_note",
+		"`call_notes`.`callnote_datetime`" => "Note Logged: ",
+		"`call_notes`.`callnote_loggedby`" => "Logged By:",
+		"`call_notes`.`callnote_note`" => "Call Notes",
 	];
 
 	// Lookup fields that can be used as filterers

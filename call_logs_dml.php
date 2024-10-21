@@ -115,6 +115,25 @@ function call_logs_delete($selected_id, $AllowDeleteOfParents = false, $skipChec
 		return $RetMsg;
 	}
 
+	// child table: supportcase
+	$res = sql("SELECT `call_ID` FROM `call_logs` WHERE `call_ID`='{$selected_id}'", $eo);
+	$call_ID = db_fetch_row($res);
+	$rires = sql("SELECT COUNT(1) FROM `supportcase` WHERE `case_call`='" . makeSafe($call_ID[0]) . "'", $eo);
+	$rirow = db_fetch_row($rires);
+	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks) {
+		$RetMsg = $Translation["couldn't delete"];
+		$RetMsg = str_replace('<RelatedRecords>', $rirow[0], $RetMsg);
+		$RetMsg = str_replace('<TableName>', 'supportcase', $RetMsg);
+		return $RetMsg;
+	} elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks) {
+		$RetMsg = $Translation['confirm delete'];
+		$RetMsg = str_replace('<RelatedRecords>', $rirow[0], $RetMsg);
+		$RetMsg = str_replace('<TableName>', 'supportcase', $RetMsg);
+		$RetMsg = str_replace('<Delete>', '<input type="button" class="btn btn-danger" value="' . html_attr($Translation['yes']) . '" onClick="window.location = \'call_logs_view.php?SelectedID=' . urlencode($selected_id) . '&delete_x=1&confirmed=1&csrf_token=' . urlencode(csrf_token(false, true)) . '\';">', $RetMsg);
+		$RetMsg = str_replace('<Cancel>', '<input type="button" class="btn btn-success" value="' . html_attr($Translation[ 'no']) . '" onClick="window.location = \'call_logs_view.php?SelectedID=' . urlencode($selected_id) . '\';">', $RetMsg);
+		return $RetMsg;
+	}
+
 	sql("DELETE FROM `call_logs` WHERE `call_ID`='{$selected_id}'", $eo);
 
 	// hook: call_logs_after_delete

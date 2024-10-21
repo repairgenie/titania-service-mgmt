@@ -1,20 +1,17 @@
-<!-- To change the layout of the detail view form, we recommend using JS code in hooks/call_logs-dv.js rather than editing this file -->
+<!-- To change the layout of the detail view form, we recommend using JS code in hooks/supportcase-dv.js rather than editing this file -->
 
 <div id="detail-view"></div>
 <div class="panel-heading"><h3 class="panel-title"><strong><%%DETAIL_VIEW_TITLE%%></strong></h3></div>
 
-<div id="call_logs_dv_container-loading" class="text-center text-info text-bold vspacer-lg"><i class="glyphicon glyphicon-refresh loop-rotate"></i> <%%TRANSLATION(Loading ...)%%></div>
+<div id="supportcase_dv_container-loading" class="text-center text-info text-bold vspacer-lg"><i class="glyphicon glyphicon-refresh loop-rotate"></i> <%%TRANSLATION(Loading ...)%%></div>
 
-<div class="panel-body hidden" id="call_logs_dv_container">
+<div class="panel-body hidden" id="supportcase_dv_container">
 	<!-- child links -->
 	<div class="row vspacer-md">
 		<div class="col-xs-12 children-links">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm vspacer-sm" href="call_notes_view.php?filterer_callnote_call=<%%URLVALUE(call_ID)%%>&<%%EMBEDDED%%>" id="call_notes_link"><img src="table.gif"> Call Notes</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="call_notes_view.php?filterer_callnote_call=<%%URLVALUE(call_ID)%%>&<%%EMBEDDED%%>" id="xs_call_notes_link"><img src="table.gif"> Call Notes</a>
-			<input type="hidden" id="call_notes_hclink" value="call_notes_view.php?filterer_callnote_call=<%%URLVALUE(call_ID)%%>&<%%EMBEDDED%%>">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm vspacer-sm" href="supportcase_view.php?filterer_case_call=<%%URLVALUE(call_ID)%%>&<%%EMBEDDED%%>" id="supportcase_link"><img src="table.gif"> Support Cases</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="supportcase_view.php?filterer_case_call=<%%URLVALUE(call_ID)%%>&<%%EMBEDDED%%>" id="xs_supportcase_link"><img src="table.gif"> Support Cases</a>
-			<input type="hidden" id="supportcase_hclink" value="supportcase_view.php?filterer_case_call=<%%URLVALUE(call_ID)%%>&<%%EMBEDDED%%>">
+			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm vspacer-sm" href="supportcase_notes_view.php?filterer_sc_notecase=<%%URLVALUE(case_ID)%%>&<%%EMBEDDED%%>" id="supportcase_notes_link"><img src="table.gif"> Supportcase notes</a>
+			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="supportcase_notes_view.php?filterer_sc_notecase=<%%URLVALUE(case_ID)%%>&<%%EMBEDDED%%>" id="xs_supportcase_notes_link"><img src="table.gif"> Supportcase notes</a>
+			<input type="hidden" id="supportcase_notes_hclink" value="supportcase_notes_view.php?filterer_sc_notecase=<%%URLVALUE(case_ID)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -22,78 +19,87 @@
 
 	<div class="row">
 		<!-- form inputs -->
-		<div class="col-md-8 col-lg-10" id="call_logs_dv_form">
+		<div class="col-md-8 col-lg-10" id="supportcase_dv_form">
 			<fieldset class="form-horizontal">
 
-				<!-- Field: Call ID -->
-				<div class="form-group call_logs-call_ID">
+				<!-- Field: Case Number -->
+				<div class="form-group supportcase-case_number">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3" for="call_ID">Call ID</label>
+					<label class="control-label col-lg-3">Case Number</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" id="call_ID"><%%VALUE(call_ID)%%></div>
+						<div class="form-control-static" id="case_number"><%%VALUE(case_number)%%></div>
 					</div>
 				</div>
 
-				<!-- Field: Date/Time Logged: -->
-				<div class="form-group call_logs-call_datetime">
+				<!-- Field: Status -->
+				<div class="form-group supportcase-case_status">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3">Date/Time Logged:</label>
+					<label class="control-label col-lg-3" for="case_status">Status</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" id="call_datetime"><%%VALUE(call_datetime)%%></div>
-					</div>
-				</div>
-
-				<!-- Field: Logged By: -->
-				<div class="form-group call_logs-call_loggedby">
-					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3">Logged By:</label>
-					<div class="col-lg-9">
-						<div class="form-control-static" id="call_loggedby"><%%VALUE(call_loggedby)%%></div>
+						<%%COMBO(case_status)%%>
 					</div>
 				</div>
 
 				<!-- Field: Client -->
-				<div class="form-group call_logs-call_client">
+				<div class="form-group supportcase-case_client">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3" for="call_client" data-parent_link="view_parent_modal">Client</label>
+					<label class="control-label col-lg-3" for="case_client" data-parent_link="view_parent_modal">Client</label>
 					<div class="col-lg-9">
-						<div class="lookup-flex"><%%COMBO(call_client)%%><%%PLINK(call_client)%%><%%ADDNEW(clients)%%></div>
+						<div class="lookup-flex"><%%COMBO(case_client)%%><%%PLINK(case_client)%%><%%ADDNEW(clients)%%></div>
 					</div>
 				</div>
 
-				<!-- Field: Related Work Order -->
-				<div class="form-group call_logs-call_workorder">
+				<!-- Field: Related Call -->
+				<div class="form-group supportcase-case_call">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3" for="call_workorder" data-parent_link="view_parent_modal">Related Work Order</label>
+					<label class="control-label col-lg-3" for="case_call" data-parent_link="view_parent_modal">Related Call</label>
 					<div class="col-lg-9">
-						<div class="lookup-flex"><%%COMBO(call_workorder)%%><%%PLINK(call_workorder)%%><%%ADDNEW(workorders)%%></div>
+						<div class="lookup-flex"><%%COMBO(case_call)%%><%%PLINK(case_call)%%><%%ADDNEW(call_logs)%%></div>
 					</div>
 				</div>
 
-				<!-- Field: Related Asset -->
-				<div class="form-group call_logs-call_asset">
+				<!-- Field: Date/Time Opened:  -->
+				<div class="form-group supportcase-case_datetime">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3" for="call_asset" data-parent_link="view_parent_modal">Related Asset</label>
+					<label class="control-label col-lg-3">Date/Time Opened: </label>
 					<div class="col-lg-9">
-						<div class="lookup-flex"><%%COMBO(call_asset)%%><%%PLINK(call_asset)%%><%%ADDNEW(assets)%%></div>
+						<div class="form-control-static" id="case_datetime"><%%VALUE(case_datetime)%%></div>
 					</div>
 				</div>
 
-				<!-- Field: Related Invoice -->
-				<div class="form-group call_logs-call_invoice">
+				<!-- Field: Opened By:  -->
+				<div class="form-group supportcase-case_openedby">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3" for="call_invoice" data-parent_link="view_parent_modal">Related Invoice</label>
+					<label class="control-label col-lg-3" for="case_openedby">Opened By: </label>
 					<div class="col-lg-9">
-						<div class="lookup-flex"><%%COMBO(call_invoice)%%><%%PLINK(call_invoice)%%><%%ADDNEW(invoice)%%></div>
+						<input maxlength="40" type="text" class="form-control" name="case_openedby" id="case_openedby" value="<%%VALUE(case_openedby)%%>">
 					</div>
 				</div>
 
-				<!-- Field: Log Entry -->
-				<div class="form-group call_logs-call_logentry">
+				<!-- Field: External/Vendor Ticket Dispatch Number -->
+				<div class="form-group supportcase-case_external">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3" for="call_logentry">Log Entry</label>
+					<label class="control-label col-lg-3" for="case_external">External/Vendor Ticket Dispatch Number</label>
+					<div class="col-lg-9">
+						<input maxlength="128" type="text" class="form-control" name="case_external" id="case_external" value="<%%VALUE(case_external)%%>">
+					</div>
+				</div>
+
+				<!-- Field: Subject/Short Description -->
+				<div class="form-group supportcase-case_subject">
+					<hr class="hidden-md hidden-lg">
+					<label class="control-label col-lg-3" for="case_subject">Subject/Short Description</label>
+					<div class="col-lg-9">
+						<input maxlength="255" type="text" class="form-control" name="case_subject" id="case_subject" value="<%%VALUE(case_subject)%%>">
+					</div>
+				</div>
+
+				<!-- Field: Case description -->
+				<div class="form-group supportcase-case_description">
+					<hr class="hidden-md hidden-lg">
+					<label class="control-label col-lg-3" for="case_description">Case description</label>
 					<div class="col-lg-9 has-nicedit">
-						<%%HTMLAREA(call_logentry)%%>
+						<%%HTMLAREA(case_description)%%>
 					</div>
 				</div>
 
@@ -102,7 +108,7 @@
 
 		<!-- DV action buttons -->
 		<hr class="hidden-md hidden-lg">
-		<div class="col-md-4 col-lg-2" id="call_logs_dv_action_buttons">
+		<div class="col-md-4 col-lg-2" id="supportcase_dv_action_buttons">
 			<div class="btn-toolbar">
 				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
 					<%%UPDATE_BUTTON%%>
@@ -124,7 +130,7 @@
 	<hr>
 	<div class="row">
 		<div class="col-lg-10 col-lg-offset-1">
-			<div id="call_logs-children" class="children-tabs">
+			<div id="supportcase-children" class="children-tabs">
 				<div class="text-center"><i class="glyphicon glyphicon-refresh loop-rotate"></i> <%%TRANSLATION(Loading ...)%%></div>
 			</div>
 		</div>
@@ -147,7 +153,7 @@
 			AppGini.once({
 				condition: function() { return bkLib != undefined; },
 				action: function() {
-					if($j('textarea#call_logentry').length) new nicEditor({ fullPanel : true }).panelInstance('call_logentry');
+					if($j('textarea#case_description').length) new nicEditor({ fullPanel : true }).panelInstance('case_description');
 				}
 			});
 
@@ -157,23 +163,23 @@
 			if(!$j('.table_view').length || $j('[name=SelectedID]').val().length) {
 				AppGini.once({
 					condition: function() {
-						return $j('.form-group.call_logs-call_client')
+						return $j('.form-group.supportcase-case_status')
 									.find('.nicEdit-main, .select2-container, input[type=radio]')
 									.length > 0
 								// or read-only DV
 								|| (!$j('#update').length && !$j('#insert').length);
 					},
 					action: function() {
-						$j('#call_logs_dv_container-loading').addClass('hidden');
-						$j('#call_logs_dv_container').removeClass('hidden');
-						AppGini.focusFormElement('call_logs', 'call_client');
+						$j('#supportcase_dv_container-loading').addClass('hidden');
+						$j('#supportcase_dv_container').removeClass('hidden');
+						AppGini.focusFormElement('supportcase', 'case_status');
 					},
 					timeout:  5000,
 					doActionOnTimeout:  true
 				});
 			} else {
-				$j('#call_logs_dv_container-loading').addClass('hidden');
-				$j('#call_logs_dv_container').removeClass('hidden');
+				$j('#supportcase_dv_container-loading').addClass('hidden');
+				$j('#supportcase_dv_container').removeClass('hidden');
 			}
 
 			$j('form').eq(0).change(function() {
@@ -212,11 +218,11 @@
 			} else {
 				post(
 					'parent-children.php', {
-						ParentTable: 'call_logs',
-						SelectedID: '<%%VALUE(call_ID)%%>',
+						ParentTable: 'supportcase',
+						SelectedID: '<%%VALUE(case_ID)%%>',
 						Operation: 'show-children'
 					},
-					'call_logs-children'
+					'supportcase-children'
 				);
 			}
 
@@ -236,7 +242,7 @@
 							localStorage.removeItem(pt + '_last_added_id');
 							AppGini.lookupText({
 								id: new_id,
-								table: 'call_logs',
+								table: 'supportcase',
 								field: field_id,
 								callback: function(data) {
 									$j('#' + field_id + '-container').select2('data', data, true);
@@ -301,10 +307,10 @@
 			if(!add_new_mode) {
 				$j('body').append('<div id="admin-tools-appendix"></div>');
 				$j('#admin-tools-appendix').load(
-					'ajax_admin_tools.php?table=call_logs&id=<%%URLVALUE(call_ID)%%>',
+					'ajax_admin_tools.php?table=supportcase&id=<%%URLVALUE(case_ID)%%>',
 					function(resp) {
 						if(!resp.length) return;
-						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=call_logs&id=<%%URLVALUE(call_ID)%%>');
+						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=supportcase&id=<%%URLVALUE(case_ID)%%>');
 					}
 				);
 			}

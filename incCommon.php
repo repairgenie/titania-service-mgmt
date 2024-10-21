@@ -120,6 +120,8 @@
 			'asset_notes' => "`asset_notes`.`assetnote_ID` as 'assetnote_ID', IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `assets1`.`asset_ID`, ' - ', `clients1`.`id`, ' - ', `clients1`.`name`), '') as 'assetnote_asset', `asset_notes`.`assetnote_note` as 'assetnote_note', `asset_notes`.`assetnote_author` as 'assetnote_author', `asset_notes`.`assetnote_timestamp` as 'assetnote_timestamp', `asset_notes`.`assetnote_editor` as 'assetnote_editor', `asset_notes`.`assetnote_editorts` as 'assetnote_editorts'",
 			'call_logs' => "`call_logs`.`call_ID` as 'call_ID', `call_logs`.`call_datetime` as 'call_datetime', `call_logs`.`call_loggedby` as 'call_loggedby', IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' : ', `clients1`.`name`), '') as 'call_client', IF(    CHAR_LENGTH(`workorders1`.`wo_ID`) || CHAR_LENGTH(`workorders1`.`wo_Title`), CONCAT_WS('',   `workorders1`.`wo_ID`, ' : ', `workorders1`.`wo_Title`), '') as 'call_workorder', IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `assets1`.`asset_ID`, ' : ', `assets1`.`asset_serial`), '') as 'call_asset', IF(    CHAR_LENGTH(`invoice1`.`id`) || CHAR_LENGTH(if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `invoice1`.`id`, ' : ', if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), '') as 'call_invoice', `call_logs`.`call_logentry` as 'call_logentry'",
 			'call_notes' => "IF(    CHAR_LENGTH(`call_logs1`.`call_ID`) || CHAR_LENGTH(`call_logs1`.`call_datetime`), CONCAT_WS('',   `call_logs1`.`call_ID`, ' : ', `call_logs1`.`call_datetime`), '') as 'callnote_call', `call_notes`.`callnote_ID` as 'callnote_ID', `call_notes`.`callnote_datetime` as 'callnote_datetime', `call_notes`.`callnote_loggedby` as 'callnote_loggedby', `call_notes`.`callnote_note` as 'callnote_note'",
+			'supportcase' => "`supportcase`.`case_ID` as 'case_ID', `supportcase`.`case_number` as 'case_number', `supportcase`.`case_status` as 'case_status', IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' : ', `clients1`.`name`), '') as 'case_client', IF(    CHAR_LENGTH(`call_logs1`.`call_ID`) || CHAR_LENGTH(`call_logs1`.`call_datetime`), CONCAT_WS('',   `call_logs1`.`call_ID`, ' : ', `call_logs1`.`call_datetime`), '') as 'case_call', `supportcase`.`case_datetime` as 'case_datetime', `supportcase`.`case_openedby` as 'case_openedby', `supportcase`.`case_external` as 'case_external', `supportcase`.`case_subject` as 'case_subject', `supportcase`.`case_description` as 'case_description'",
+			'supportcase_notes' => "`supportcase_notes`.`sc_noteID` as 'sc_noteID', `supportcase_notes`.`sc_notedatetime` as 'sc_notedatetime', `supportcase_notes`.`sc_noteauthor` as 'sc_noteauthor', IF(    CHAR_LENGTH(`supportcase1`.`case_number`) || CHAR_LENGTH(`supportcase1`.`case_subject`), CONCAT_WS('',   `supportcase1`.`case_number`, ' : ', `supportcase1`.`case_subject`), '') as 'sc_notecase', `supportcase_notes`.`sc_notedetails` as 'sc_notedetails'",
 		];
 
 		if(isset($sql_fields[$table_name])) return $sql_fields[$table_name];
@@ -145,6 +147,8 @@
 			'asset_notes' => "`asset_notes` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`asset_notes`.`assetnote_asset` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`assets1`.`asset_client` ",
 			'call_logs' => "`call_logs` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`call_logs`.`call_client` LEFT JOIN `workorders` as workorders1 ON `workorders1`.`wo_ID`=`call_logs`.`call_workorder` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`call_logs`.`call_asset` LEFT JOIN `invoice` as invoice1 ON `invoice1`.`id`=`call_logs`.`call_invoice` ",
 			'call_notes' => "`call_notes` LEFT JOIN `call_logs` as call_logs1 ON `call_logs1`.`call_ID`=`call_notes`.`callnote_call` ",
+			'supportcase' => "`supportcase` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`supportcase`.`case_client` LEFT JOIN `call_logs` as call_logs1 ON `call_logs1`.`call_ID`=`supportcase`.`case_call` ",
+			'supportcase_notes' => "`supportcase_notes` LEFT JOIN `supportcase` as supportcase1 ON `supportcase1`.`case_ID`=`supportcase_notes`.`sc_notecase` ",
 		];
 
 		$pkey = [
@@ -162,6 +166,8 @@
 			'asset_notes' => 'assetnote_ID',
 			'call_logs' => 'call_ID',
 			'call_notes' => 'callnote_ID',
+			'supportcase' => 'case_ID',
+			'supportcase_notes' => 'sc_noteID',
 		];
 
 		if(!isset($sql_from[$table_name])) return false;
@@ -347,6 +353,25 @@
 				'callnote_datetime' => '',
 				'callnote_loggedby' => '',
 				'callnote_note' => '',
+			],
+			'supportcase' => [
+				'case_ID' => '',
+				'case_number' => '',
+				'case_status' => '',
+				'case_client' => '',
+				'case_call' => '',
+				'case_datetime' => '',
+				'case_openedby' => '',
+				'case_external' => '',
+				'case_subject' => '',
+				'case_description' => '',
+			],
+			'supportcase_notes' => [
+				'sc_noteID' => '',
+				'sc_notedatetime' => '',
+				'sc_noteauthor' => '',
+				'sc_notecase' => '',
+				'sc_notedetails' => '',
 			],
 		];
 

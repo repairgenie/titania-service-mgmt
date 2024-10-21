@@ -263,6 +263,42 @@ call_notes_delete1Tip=["",spacer+"This option allows each member of the group to
 call_notes_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Call Notes' table."];
 call_notes_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Call Notes' table."];
 
+// supportcase table
+supportcase_addTip=["",spacer+"This option allows all members of the group to add records to the 'Support Cases' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+supportcase_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Support Cases' table."];
+supportcase_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Support Cases' table."];
+supportcase_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Support Cases' table."];
+supportcase_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Support Cases' table."];
+
+supportcase_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Support Cases' table."];
+supportcase_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Support Cases' table."];
+supportcase_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Support Cases' table."];
+supportcase_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Support Cases' table, regardless of their owner."];
+
+supportcase_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Support Cases' table."];
+supportcase_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Support Cases' table."];
+supportcase_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Support Cases' table."];
+supportcase_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Support Cases' table."];
+
+// supportcase_notes table
+supportcase_notes_addTip=["",spacer+"This option allows all members of the group to add records to the 'Supportcase notes' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+supportcase_notes_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Supportcase notes' table."];
+supportcase_notes_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Supportcase notes' table."];
+supportcase_notes_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Supportcase notes' table."];
+supportcase_notes_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Supportcase notes' table."];
+
+supportcase_notes_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Supportcase notes' table."];
+supportcase_notes_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Supportcase notes' table."];
+supportcase_notes_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Supportcase notes' table."];
+supportcase_notes_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Supportcase notes' table, regardless of their owner."];
+
+supportcase_notes_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Supportcase notes' table."];
+supportcase_notes_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Supportcase notes' table."];
+supportcase_notes_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Supportcase notes' table."];
+supportcase_notes_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Supportcase notes' table."];
+
 /*
 	Style syntax:
 	-------------

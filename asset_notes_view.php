@@ -20,11 +20,11 @@
 	$x->QueryFieldsTV = [
 		"`asset_notes`.`assetnote_ID`" => "assetnote_ID",
 		"IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `assets1`.`asset_ID`, ' - ', `clients1`.`id`, ' - ', `clients1`.`name`), '') /* Asset */" => "assetnote_asset",
-		"`asset_notes`.`assetnote_note`" => "assetnote_note",
-		"`asset_notes`.`assetnote_author`" => "assetnote_author",
-		"`asset_notes`.`assetnote_timestamp`" => "assetnote_timestamp",
-		"`asset_notes`.`assetnote_editor`" => "assetnote_editor",
-		"`asset_notes`.`assetnote_editorts`" => "assetnote_editorts",
+		"if(CHAR_LENGTH(`asset_notes`.`assetnote_note`)>128, concat(left(`asset_notes`.`assetnote_note`,128),' ...'), `asset_notes`.`assetnote_note`)" => "assetnote_note",
+		"if(CHAR_LENGTH(`asset_notes`.`assetnote_author`)>64, concat(left(`asset_notes`.`assetnote_author`,64),' ...'), `asset_notes`.`assetnote_author`)" => "assetnote_author",
+		"if(CHAR_LENGTH(`asset_notes`.`assetnote_timestamp`)>64, concat(left(`asset_notes`.`assetnote_timestamp`,64),' ...'), `asset_notes`.`assetnote_timestamp`)" => "assetnote_timestamp",
+		"if(CHAR_LENGTH(`asset_notes`.`assetnote_editor`)>64, concat(left(`asset_notes`.`assetnote_editor`,64),' ...'), `asset_notes`.`assetnote_editor`)" => "assetnote_editor",
+		"if(CHAR_LENGTH(`asset_notes`.`assetnote_editorts`)>64, concat(left(`asset_notes`.`assetnote_editorts`,64),' ...'), `asset_notes`.`assetnote_editorts`)" => "assetnote_editorts",
 	];
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = [
@@ -62,11 +62,11 @@
 	$x->QueryFieldsQS = [
 		"`asset_notes`.`assetnote_ID`" => "assetnote_ID",
 		"IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `assets1`.`asset_ID`, ' - ', `clients1`.`id`, ' - ', `clients1`.`name`), '') /* Asset */" => "assetnote_asset",
-		"`asset_notes`.`assetnote_note`" => "assetnote_note",
-		"`asset_notes`.`assetnote_author`" => "assetnote_author",
-		"`asset_notes`.`assetnote_timestamp`" => "assetnote_timestamp",
-		"`asset_notes`.`assetnote_editor`" => "assetnote_editor",
-		"`asset_notes`.`assetnote_editorts`" => "assetnote_editorts",
+		"`asset_notes`.`assetnote_note`" => "Note",
+		"`asset_notes`.`assetnote_author`" => "Assetnote author",
+		"`asset_notes`.`assetnote_timestamp`" => "Assetnote timestamp",
+		"`asset_notes`.`assetnote_editor`" => "Assetnote editor",
+		"`asset_notes`.`assetnote_editorts`" => "Assetnote editorts",
 	];
 
 	// Lookup fields that can be used as filterers

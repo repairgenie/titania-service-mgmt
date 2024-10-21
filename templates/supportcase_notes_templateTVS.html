@@ -1,0 +1,12 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the supportcase_notes_init() hook (in hooks/supportcase_notes.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="supportcase_notes-sc_noteID-<%%VALUE(sc_noteID)%%>" class="supportcase_notes-sc_noteID text-right"><%%VALUE(sc_noteID)%%></td>
+		<td id="supportcase_notes-sc_notedatetime-<%%VALUE(sc_noteID)%%>" class="supportcase_notes-sc_notedatetime"><%%VALUE(sc_notedatetime)%%></td>
+		<td id="supportcase_notes-sc_noteauthor-<%%VALUE(sc_noteID)%%>" class="supportcase_notes-sc_noteauthor"><%%VALUE(sc_noteauthor)%%></td>
+		<td id="supportcase_notes-sc_notecase-<%%VALUE(sc_noteID)%%>" class="supportcase_notes-sc_notecase"><%%VALUE(sc_notecase)%%></td>
+		<td id="supportcase_notes-sc_notedetails-<%%VALUE(sc_noteID)%%>" class="supportcase_notes-sc_notedetails"><%%VALUE(sc_notedetails)%%></td>

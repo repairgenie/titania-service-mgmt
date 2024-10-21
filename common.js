@@ -463,6 +463,18 @@ function call_notes_validateData() {
 
 	return !errors;
 }
+function supportcase_validateData() {
+	$j('.has-error').removeClass('has-error');
+	var errors = false;
+
+	return !errors;
+}
+function supportcase_notes_validateData() {
+	$j('.has-error').removeClass('has-error');
+	var errors = false;
+
+	return !errors;
+}
 
 function post(url, params, update, disable, loading, success_callback) {
 	$j.ajax({

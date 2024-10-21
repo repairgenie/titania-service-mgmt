@@ -19,13 +19,13 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = [
 		"`call_logs`.`call_ID`" => "call_ID",
-		"`call_logs`.`call_datetime`" => "call_datetime",
-		"`call_logs`.`call_loggedby`" => "call_loggedby",
+		"if(CHAR_LENGTH(`call_logs`.`call_datetime`)>64, concat(left(`call_logs`.`call_datetime`,64),' ...'), `call_logs`.`call_datetime`)" => "call_datetime",
+		"if(CHAR_LENGTH(`call_logs`.`call_loggedby`)>64, concat(left(`call_logs`.`call_loggedby`,64),' ...'), `call_logs`.`call_loggedby`)" => "call_loggedby",
 		"IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' : ', `clients1`.`name`), '') /* Client */" => "call_client",
 		"IF(    CHAR_LENGTH(`workorders1`.`wo_ID`) || CHAR_LENGTH(`workorders1`.`wo_Title`), CONCAT_WS('',   `workorders1`.`wo_ID`, ' : ', `workorders1`.`wo_Title`), '') /* Related Work Order */" => "call_workorder",
 		"IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `assets1`.`asset_ID`, ' : ', `assets1`.`asset_serial`), '') /* Related Asset */" => "call_asset",
 		"IF(    CHAR_LENGTH(`invoice1`.`id`) || CHAR_LENGTH(if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `invoice1`.`id`, ' : ', if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), '') /* Related Invoice */" => "call_invoice",
-		"`call_logs`.`call_logentry`" => "call_logentry",
+		"if(CHAR_LENGTH(`call_logs`.`call_logentry`)>64, concat(left(`call_logs`.`call_logentry`,64),' ...'), `call_logs`.`call_logentry`)" => "call_logentry",
 	];
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = [
@@ -65,13 +65,13 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = [
 		"`call_logs`.`call_ID`" => "call_ID",
-		"`call_logs`.`call_datetime`" => "call_datetime",
-		"`call_logs`.`call_loggedby`" => "call_loggedby",
+		"`call_logs`.`call_datetime`" => "Date/Time Logged:",
+		"`call_logs`.`call_loggedby`" => "Logged By:",
 		"IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' : ', `clients1`.`name`), '') /* Client */" => "call_client",
 		"IF(    CHAR_LENGTH(`workorders1`.`wo_ID`) || CHAR_LENGTH(`workorders1`.`wo_Title`), CONCAT_WS('',   `workorders1`.`wo_ID`, ' : ', `workorders1`.`wo_Title`), '') /* Related Work Order */" => "call_workorder",
 		"IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `assets1`.`asset_ID`, ' : ', `assets1`.`asset_serial`), '') /* Related Asset */" => "call_asset",
 		"IF(    CHAR_LENGTH(`invoice1`.`id`) || CHAR_LENGTH(if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `invoice1`.`id`, ' : ', if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), '') /* Related Invoice */" => "call_invoice",
-		"`call_logs`.`call_logentry`" => "call_logentry",
+		"`call_logs`.`call_logentry`" => "Log Entry",
 	];
 
 	// Lookup fields that can be used as filterers

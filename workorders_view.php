@@ -19,12 +19,12 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = [
 		"`workorders`.`wo_ID`" => "wo_ID",
-		"`workorders`.`wo_createdby`" => "wo_createdby",
-		"`workorders`.`wo_datecreated`" => "wo_datecreated",
-		"`workorders`.`wo_Status`" => "wo_Status",
+		"if(CHAR_LENGTH(`workorders`.`wo_createdby`)>64, concat(left(`workorders`.`wo_createdby`,64),' ...'), `workorders`.`wo_createdby`)" => "wo_createdby",
+		"if(CHAR_LENGTH(`workorders`.`wo_datecreated`)>64, concat(left(`workorders`.`wo_datecreated`,64),' ...'), `workorders`.`wo_datecreated`)" => "wo_datecreated",
+		"if(CHAR_LENGTH(`workorders`.`wo_Status`)>64, concat(left(`workorders`.`wo_Status`,64),' ...'), `workorders`.`wo_Status`)" => "wo_Status",
 		"IF(    CHAR_LENGTH(`techs1`.`techID`) || CHAR_LENGTH(`techs1`.`techName`), CONCAT_WS('',   `techs1`.`techID`, ' - ', `techs1`.`techName`), '') /* Assigned to Tech */" => "wo_assignedto",
 		"IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' - ', `clients1`.`name`), '') /* Client */" => "wo_client",
-		"`workorders`.`wo_ticket`" => "wo_ticket",
+		"if(CHAR_LENGTH(`workorders`.`wo_ticket`)>64, concat(left(`workorders`.`wo_ticket`,64),' ...'), `workorders`.`wo_ticket`)" => "wo_ticket",
 		"IF(    CHAR_LENGTH(`clients2`.`id`) || CHAR_LENGTH(`clients2`.`name`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `clients2`.`id`, ' - ', `clients2`.`name`, ' - ', `assets1`.`asset_serial`), '') /* Client Asset/Device */" => "wo_asset",
 		"if(CHAR_LENGTH(`workorders`.`wo_Title`)>128, concat(left(`workorders`.`wo_Title`,128),' ...'), `workorders`.`wo_Title`)" => "wo_Title",
 		"if(CHAR_LENGTH(`workorders`.`wo_Description`)>128, concat(left(`workorders`.`wo_Description`,128),' ...'), `workorders`.`wo_Description`)" => "wo_Description",
@@ -73,12 +73,12 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = [
 		"`workorders`.`wo_ID`" => "wo_ID",
-		"`workorders`.`wo_createdby`" => "wo_createdby",
-		"`workorders`.`wo_datecreated`" => "wo_datecreated",
-		"`workorders`.`wo_Status`" => "wo_Status",
+		"`workorders`.`wo_createdby`" => "Created By",
+		"`workorders`.`wo_datecreated`" => "Date Created",
+		"`workorders`.`wo_Status`" => "Status",
 		"IF(    CHAR_LENGTH(`techs1`.`techID`) || CHAR_LENGTH(`techs1`.`techName`), CONCAT_WS('',   `techs1`.`techID`, ' - ', `techs1`.`techName`), '') /* Assigned to Tech */" => "wo_assignedto",
 		"IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' - ', `clients1`.`name`), '') /* Client */" => "wo_client",
-		"`workorders`.`wo_ticket`" => "wo_ticket",
+		"`workorders`.`wo_ticket`" => "Ticket/Reference Number",
 		"IF(    CHAR_LENGTH(`clients2`.`id`) || CHAR_LENGTH(`clients2`.`name`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `clients2`.`id`, ' - ', `clients2`.`name`, ' - ', `assets1`.`asset_serial`), '') /* Client Asset/Device */" => "wo_asset",
 		"`workorders`.`wo_Title`" => "Title",
 		"`workorders`.`wo_Description`" => "Description of Issue",

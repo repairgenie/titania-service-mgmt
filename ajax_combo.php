@@ -324,6 +324,43 @@
 				'not_null' => false,
 			],
 		],
+		'supportcase' => [
+			'case_client' => [
+				'parent_table' => 'clients',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`clients`.`id`) || CHAR_LENGTH(`clients`.`name`), CONCAT_WS(\'\', `clients`.`id`, \' : \', `clients`.`name`), \'\')',
+				'parent_from' => '`clients` ',
+				'filterers' => [],
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+			'case_call' => [
+				'parent_table' => 'call_logs',
+				'parent_pk_field' => 'call_ID',
+				'parent_caption' => 'IF(CHAR_LENGTH(`call_logs`.`call_ID`) || CHAR_LENGTH(`call_logs`.`call_datetime`), CONCAT_WS(\'\', `call_logs`.`call_ID`, \' : \', `call_logs`.`call_datetime`), \'\')',
+				'parent_from' => '`call_logs` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`call_logs`.`call_client` LEFT JOIN `workorders` as workorders1 ON `workorders1`.`wo_ID`=`call_logs`.`call_workorder` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`call_logs`.`call_asset` LEFT JOIN `invoice` as invoice1 ON `invoice1`.`id`=`call_logs`.`call_invoice` ',
+				'filterers' => ['case_client' => 'call_client'],
+				'custom_query' => '',
+				'inherit_permissions' => true,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+		],
+		'supportcase_notes' => [
+			'sc_notecase' => [
+				'parent_table' => 'supportcase',
+				'parent_pk_field' => 'case_ID',
+				'parent_caption' => 'IF(CHAR_LENGTH(`supportcase`.`case_number`) || CHAR_LENGTH(`supportcase`.`case_subject`), CONCAT_WS(\'\', `supportcase`.`case_number`, \' : \', `supportcase`.`case_subject`), \'\')',
+				'parent_from' => '`supportcase` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`supportcase`.`case_client` LEFT JOIN `call_logs` as call_logs1 ON `call_logs1`.`call_ID`=`supportcase`.`case_call` ',
+				'filterers' => [],
+				'custom_query' => '',
+				'inherit_permissions' => true,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+		],
 	];
 
 	// XSS prevention

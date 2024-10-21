@@ -403,9 +403,9 @@
 			// make sure this is an admin
 			if(Authentication::getAdmin() === false) {
 				?>
-				<div id="manual-redir" style="width: 400px; margin: 10px auto;">If not redirected automatically, <a href="appginilte_install.php">click here</a>!</div>
+				<div id="manual-redir" style="width: 400px; margin: 10px auto;">If not redirected automatically, <a href="index.php">click here</a>!</div>
 				<script>
-					window.location = 'appginite_install.php';
+					window.location = 'index.php';
 				</script>
 				<?php
 				exit;
@@ -420,8 +420,9 @@
 				</div>
 				<div class="panel-content">
 					<ul id="next-actions" class="nav nav-pills nav-stacked">
-						<li class="acive"><a href="appginilte_install.php"><i class="glyphicon glyphicon-play"></i> <b><?php echo $Translation['setup next 1']; ?></b></a></li>
-						
+						<li class="acive"><a href="index.php"><i class="glyphicon glyphicon-play"></i> <b><?php echo $Translation['setup next 1']; ?></b></a></li>
+						<li><a href="import-csv.php"><i class="glyphicon glyphicon-upload"></i> <?php echo $Translation['setup next 2']; ?></a></li>
+						<li><a href="admin/pageHome.php"><i class="glyphicon glyphicon-cog"></i> <?php echo $Translation['setup next 3']; ?></a></li>
 					</ul>
 				</div>
 			</div>

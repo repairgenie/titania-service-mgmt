@@ -105,7 +105,7 @@
 
 		$all_tables = [
 			/* ['table_name' => [table props assoc array] */   
-				'invoices' => [
+				'invoice' => [
 					'Caption' => 'Invoices',
 					'Description' => '',
 					'tableIcon' => 'resources/table_icons/attributes_display.png',
@@ -189,6 +189,20 @@
 					'group' => $tg[2],
 					'homepageShowCount' => 0
 				],
+				'call_logs' => [
+					'Caption' => 'Call Logs',
+					'Description' => '',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[0],
+					'homepageShowCount' => 0
+				],
+				'call_notes' => [
+					'Caption' => 'Call Notes',
+					'Description' => '',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[0],
+					'homepageShowCount' => 0
+				],
 		];
 
 		if($skip_authentication || getLoggedAdmin()) return $all_tables;
@@ -205,7 +219,7 @@
 		$arrAccessTables = [];
 		$arrTables = [
 			/* 'table_name' => ['table caption', 'homepage description', 'icon', 'table group name'] */   
-			'invoices' => ['Invoices', '', 'resources/table_icons/attributes_display.png', 'Sales &amp; Billing'],
+			'invoice' => ['Invoices', '', 'resources/table_icons/attributes_display.png', 'Sales &amp; Billing'],
 			'clients' => ['Clients', '', 'resources/table_icons/administrator.png', 'Clients'],
 			'item_prices' => ['Prices History', '', 'resources/table_icons/card_money.png', 'Sales &amp; Billing'],
 			'invoice_items' => ['Invoice items', '', 'resources/table_icons/barcode.png', 'Sales &amp; Billing'],
@@ -217,6 +231,8 @@
 			'technotes' => ['Technician Notes', '', 'table.gif', 'Work Management'],
 			'tblwopubstatus' => ['Work Order Status', '', 'table.gif', 'Work Management'],
 			'asset_notes' => ['Asset notes', '', 'table.gif', 'Work Management'],
+			'call_logs' => ['Call Logs', '', 'table.gif', 'None'],
+			'call_notes' => ['Call Notes', '', 'table.gif', 'None'],
 		];
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
@@ -1009,7 +1025,7 @@
 		if($schema === null) {
 			/* application schema as created in AppGini */
 			$schema = [
-				'invoices' => [
+				'invoice' => [
 					'id' => [
 						'appgini' => "INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT",
 						'info' => [
@@ -1701,6 +1717,101 @@
 						'appgini' => "VARCHAR(40) NULL",
 						'info' => [
 							'caption' => 'Assetnote editorts',
+							'description' => '',
+						],
+					],
+				],
+				'call_logs' => [
+					'call_ID' => [
+						'appgini' => "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+						'info' => [
+							'caption' => 'Call ID',
+							'description' => '',
+						],
+					],
+					'call_datetime' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'Date/Time Logged:',
+							'description' => '',
+						],
+					],
+					'call_loggedby' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'Logged By:',
+							'description' => '',
+						],
+					],
+					'call_client' => [
+						'appgini' => "INT UNSIGNED NULL",
+						'info' => [
+							'caption' => 'Client',
+							'description' => '',
+						],
+					],
+					'call_workorder' => [
+						'appgini' => "INT NULL",
+						'info' => [
+							'caption' => 'Related Work Order',
+							'description' => '',
+						],
+					],
+					'call_asset' => [
+						'appgini' => "INT NULL",
+						'info' => [
+							'caption' => 'Related Asset',
+							'description' => '',
+						],
+					],
+					'call_invoice' => [
+						'appgini' => "INT UNSIGNED NULL",
+						'info' => [
+							'caption' => 'Related Invoice',
+							'description' => '',
+						],
+					],
+					'call_logentry' => [
+						'appgini' => "LONGTEXT NULL",
+						'info' => [
+							'caption' => 'Log Entry',
+							'description' => '',
+						],
+					],
+				],
+				'call_notes' => [
+					'callnote_call' => [
+						'appgini' => "INT NULL",
+						'info' => [
+							'caption' => 'Related Call: ',
+							'description' => '',
+						],
+					],
+					'callnote_ID' => [
+						'appgini' => "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+						'info' => [
+							'caption' => 'Note ID',
+							'description' => '',
+						],
+					],
+					'callnote_datetime' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'Note Logged: ',
+							'description' => '',
+						],
+					],
+					'callnote_loggedby' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'Logged By:',
+							'description' => '',
+						],
+					],
+					'callnote_note' => [
+						'appgini' => "LONGTEXT NULL",
+						'info' => [
+							'caption' => 'Call Notes',
 							'description' => '',
 						],
 					],
@@ -2732,14 +2843,14 @@
 		 *             'parent table' => [main lookup fields in child]
 		 */
 		$parents = [
-			'invoices' => [
+			'invoice' => [
 				'clients' => ['client'],
 			],
 			'item_prices' => [
 				'items' => ['item'],
 			],
 			'invoice_items' => [
-				'invoices' => ['invoice'],
+				'invoice' => ['invoice'],
 				'items' => ['item'],
 			],
 			'workorders' => [
@@ -2761,6 +2872,15 @@
 			],
 			'asset_notes' => [
 				'assets' => ['assetnote_asset'],
+			],
+			'call_logs' => [
+				'clients' => ['call_client'],
+				'workorders' => ['call_workorder'],
+				'assets' => ['call_asset'],
+				'invoice' => ['call_invoice'],
+			],
+			'call_notes' => [
+				'call_logs' => ['callnote_call'],
 			],
 		];
 
@@ -2787,7 +2907,7 @@
 		 *             field => query, ...
 		 */
 		return [
-			'invoices' => [
+			'invoice' => [
 				'subtotal' => 'SELECT IFNULL(ROUND(SUM(`invoice_items`.`unit_price` * `invoice_items`.`qty`), 2), 0.00) FROM `invoices` 
 					LEFT JOIN `invoice_items` ON `invoice_items`.`invoice`=`invoices`.`id` 
 					WHERE `invoices`.`id`=\'%ID%\'',
@@ -2836,6 +2956,10 @@
 			'tblwopubstatus' => [
 			],
 			'asset_notes' => [
+			],
+			'call_logs' => [
+			],
+			'call_notes' => [
 			],
 		];
 	}
@@ -2978,7 +3102,7 @@
 			column is replaced by the caption of the auto-fill lookup field.
 		*/
 		$lookupQuery = [
-			'invoices' => [
+			'invoice' => [
 				'client' => 'SELECT `clients`.`id`, `clients`.`name` FROM `clients` ORDER BY 2',
 				'client_contact' => 'SELECT `clients`.`id`, `clients`.`contact` FROM `clients` ORDER BY 2',
 				'client_address' => 'SELECT `clients`.`id`, `clients`.`address` FROM `clients` ORDER BY 2',
@@ -2993,7 +3117,7 @@
 				'item' => 'SELECT `items`.`id`, `items`.`item_description` FROM `items` ORDER BY 2',
 			],
 			'invoice_items' => [
-				'invoice' => 'SELECT `invoices`.`id`, `invoices`.`code` FROM `invoices` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`invoices`.`client` ORDER BY 2',
+				'invoice' => 'SELECT `invoice`.`id`, `invoice`.`code` FROM `invoice` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`invoice`.`client` ORDER BY 2',
 				'item' => 'SELECT `items`.`id`, `items`.`item_description` FROM `items` ORDER BY 2',
 				'current_price' => 'SELECT `items`.`id`, `items`.`unit_price` FROM `items` ORDER BY 2',
 			],
@@ -3020,6 +3144,15 @@
 			],
 			'asset_notes' => [
 				'assetnote_asset' => 'SELECT `assets`.`asset_ID`, IF(CHAR_LENGTH(`assets`.`asset_ID`) || CHAR_LENGTH(`assets`.`asset_client`), CONCAT_WS(\'\', `assets`.`asset_ID`, \' - \', IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS(\'\',   `clients1`.`id`, \' - \', `clients1`.`name`), \'\')), \'\') FROM `assets` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`assets`.`asset_client` ORDER BY 2',
+			],
+			'call_logs' => [
+				'call_client' => 'SELECT `clients`.`id`, IF(CHAR_LENGTH(`clients`.`id`) || CHAR_LENGTH(`clients`.`name`), CONCAT_WS(\'\', `clients`.`id`, \' : \', `clients`.`name`), \'\') FROM `clients` ORDER BY 2',
+				'call_workorder' => 'SELECT `workorders`.`wo_ID`, IF(CHAR_LENGTH(`workorders`.`wo_ID`) || CHAR_LENGTH(`workorders`.`wo_Title`), CONCAT_WS(\'\', `workorders`.`wo_ID`, \' : \', `workorders`.`wo_Title`), \'\') FROM `workorders` LEFT JOIN `techs` as techs1 ON `techs1`.`techID`=`workorders`.`wo_assignedto` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`workorders`.`wo_client` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`workorders`.`wo_asset` LEFT JOIN `clients` as clients2 ON `clients2`.`id`=`assets1`.`asset_client` ORDER BY 2',
+				'call_asset' => 'SELECT `assets`.`asset_ID`, IF(CHAR_LENGTH(`assets`.`asset_ID`) || CHAR_LENGTH(`assets`.`asset_serial`), CONCAT_WS(\'\', `assets`.`asset_ID`, \' : \', `assets`.`asset_serial`), \'\') FROM `assets` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`assets`.`asset_client` ORDER BY 2',
+				'call_invoice' => 'SELECT `invoice`.`id`, IF(CHAR_LENGTH(`invoice`.`id`) || CHAR_LENGTH(if(`invoice`.`date_due`,date_format(`invoice`.`date_due`,\'%d/%m/%Y\'),\'\')), CONCAT_WS(\'\', `invoice`.`id`, \' : \', if(`invoice`.`date_due`,date_format(`invoice`.`date_due`,\'%d/%m/%Y\'),\'\')), \'\') FROM `invoice` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`invoice`.`client` ORDER BY 2',
+			],
+			'call_notes' => [
+				'callnote_call' => 'SELECT `call_logs`.`call_ID`, IF(CHAR_LENGTH(`call_logs`.`call_ID`) || CHAR_LENGTH(`call_logs`.`call_datetime`), CONCAT_WS(\'\', `call_logs`.`call_ID`, \' : \', `call_logs`.`call_datetime`), \'\') FROM `call_logs` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`call_logs`.`call_client` LEFT JOIN `workorders` as workorders1 ON `workorders1`.`wo_ID`=`call_logs`.`call_workorder` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`call_logs`.`call_asset` LEFT JOIN `invoice` as invoice1 ON `invoice1`.`id`=`call_logs`.`call_invoice` ORDER BY 2',
 			],
 		];
 

@@ -4,17 +4,17 @@
 
 	// accept a record as an assoc array, return transformed row ready to insert to table
 	$transformFunctions = [
-		'invoices' => function($data, $options = []) {
+		'invoice' => function($data, $options = []) {
 			if(isset($data['date_due'])) $data['date_due'] = guessMySQLDateTime($data['date_due']);
-			if(isset($data['client'])) $data['client'] = pkGivenLookupText($data['client'], 'invoices', 'client');
+			if(isset($data['client'])) $data['client'] = pkGivenLookupText($data['client'], 'invoice', 'client');
 			if(isset($data['client_comments'])) $data['client_comments'] = preg_replace('/[^\d\.]/', '', $data['client_comments']);
 			if(isset($data['tax'])) $data['tax'] = preg_replace('/[^\d\.]/', '', $data['tax']);
-			if(isset($data['client_contact'])) $data['client_contact'] = thisOr($data['client'], pkGivenLookupText($data['client_contact'], 'invoices', 'client_contact'));
-			if(isset($data['client_address'])) $data['client_address'] = thisOr($data['client'], pkGivenLookupText($data['client_address'], 'invoices', 'client_address'));
-			if(isset($data['client_phone'])) $data['client_phone'] = thisOr($data['client'], pkGivenLookupText($data['client_phone'], 'invoices', 'client_phone'));
-			if(isset($data['client_email'])) $data['client_email'] = thisOr($data['client'], pkGivenLookupText($data['client_email'], 'invoices', 'client_email'));
-			if(isset($data['client_website'])) $data['client_website'] = thisOr($data['client'], pkGivenLookupText($data['client_website'], 'invoices', 'client_website'));
-			if(isset($data['client_comments'])) $data['client_comments'] = thisOr($data['client'], pkGivenLookupText($data['client_comments'], 'invoices', 'client_comments'));
+			if(isset($data['client_contact'])) $data['client_contact'] = thisOr($data['client'], pkGivenLookupText($data['client_contact'], 'invoice', 'client_contact'));
+			if(isset($data['client_address'])) $data['client_address'] = thisOr($data['client'], pkGivenLookupText($data['client_address'], 'invoice', 'client_address'));
+			if(isset($data['client_phone'])) $data['client_phone'] = thisOr($data['client'], pkGivenLookupText($data['client_phone'], 'invoice', 'client_phone'));
+			if(isset($data['client_email'])) $data['client_email'] = thisOr($data['client'], pkGivenLookupText($data['client_email'], 'invoice', 'client_email'));
+			if(isset($data['client_website'])) $data['client_website'] = thisOr($data['client'], pkGivenLookupText($data['client_website'], 'invoice', 'client_website'));
+			if(isset($data['client_comments'])) $data['client_comments'] = thisOr($data['client'], pkGivenLookupText($data['client_comments'], 'invoice', 'client_comments'));
 
 			return $data;
 		},
@@ -78,11 +78,24 @@
 
 			return $data;
 		},
+		'call_logs' => function($data, $options = []) {
+			if(isset($data['call_client'])) $data['call_client'] = pkGivenLookupText($data['call_client'], 'call_logs', 'call_client');
+			if(isset($data['call_workorder'])) $data['call_workorder'] = pkGivenLookupText($data['call_workorder'], 'call_logs', 'call_workorder');
+			if(isset($data['call_asset'])) $data['call_asset'] = pkGivenLookupText($data['call_asset'], 'call_logs', 'call_asset');
+			if(isset($data['call_invoice'])) $data['call_invoice'] = pkGivenLookupText($data['call_invoice'], 'call_logs', 'call_invoice');
+
+			return $data;
+		},
+		'call_notes' => function($data, $options = []) {
+			if(isset($data['callnote_call'])) $data['callnote_call'] = pkGivenLookupText($data['callnote_call'], 'call_notes', 'callnote_call');
+
+			return $data;
+		},
 	];
 
 	// accept a record as an assoc array, return a boolean indicating whether to import or skip record
 	$filterFunctions = [
-		'invoices' => function($data, $options = []) { return true; },
+		'invoice' => function($data, $options = []) { return true; },
 		'clients' => function($data, $options = []) { return true; },
 		'item_prices' => function($data, $options = []) { return true; },
 		'invoice_items' => function($data, $options = []) { return true; },
@@ -94,6 +107,8 @@
 		'technotes' => function($data, $options = []) { return true; },
 		'tblwopubstatus' => function($data, $options = []) { return true; },
 		'asset_notes' => function($data, $options = []) { return true; },
+		'call_logs' => function($data, $options = []) { return true; },
+		'call_notes' => function($data, $options = []) { return true; },
 	];
 
 	/*

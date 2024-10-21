@@ -91,7 +91,7 @@
 	$x->AllowPrinting = 1;
 	$x->AllowPrintingDV = 1;
 	$x->AllowCSV = 1;
-	$x->RecordsPerPage = 75;
+	$x->RecordsPerPage = 1005;
 	$x->QuickSearch = 1;
 	$x->QuickSearchText = $Translation['quick search'];
 	$x->ScriptFileName = 'assets_view.php';

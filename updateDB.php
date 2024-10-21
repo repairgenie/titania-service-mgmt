@@ -10,8 +10,8 @@
 	if($thisMD5 != $prevMD5) {
 		// set up tables
 		setupTable(
-			'invoices', " 
-			CREATE TABLE IF NOT EXISTS `invoices` ( 
+			'invoice', " 
+			CREATE TABLE IF NOT EXISTS `invoice` ( 
 				`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 				PRIMARY KEY (`id`),
 				`code` VARCHAR(20) NULL,
@@ -33,9 +33,14 @@
 				`invoice_template` VARCHAR(100) NULL,
 				`created` VARCHAR(200) NULL,
 				`last_updated` VARCHAR(200) NULL
-			) CHARSET utf8"
+			) CHARSET utf8", [
+				"ALTER TABLE `ca` RENAME `invoice`",
+				"UPDATE `membership_userrecords` SET `tableName`='invoice' WHERE `tableName`='ca'",
+				"UPDATE `membership_userpermissions` SET `tableName`='invoice' WHERE `tableName`='ca'",
+				"UPDATE `membership_grouppermissions` SET `tableName`='invoice' WHERE `tableName`='ca'",
+			]
 		);
-		setupIndexes('invoices', ['client',]);
+		setupIndexes('invoice', ['client',]);
 
 		setupTable(
 			'clients', " 
@@ -199,6 +204,35 @@
 			) CHARSET utf8"
 		);
 		setupIndexes('asset_notes', ['assetnote_asset',]);
+
+		setupTable(
+			'call_logs', " 
+			CREATE TABLE IF NOT EXISTS `call_logs` ( 
+				`call_ID` INT NOT NULL AUTO_INCREMENT,
+				PRIMARY KEY (`call_ID`),
+				`call_datetime` VARCHAR(40) NULL,
+				`call_loggedby` VARCHAR(40) NULL,
+				`call_client` INT UNSIGNED NULL,
+				`call_workorder` INT NULL,
+				`call_asset` INT NULL,
+				`call_invoice` INT UNSIGNED NULL,
+				`call_logentry` LONGTEXT NULL
+			) CHARSET utf8"
+		);
+		setupIndexes('call_logs', ['call_client','call_workorder','call_asset','call_invoice',]);
+
+		setupTable(
+			'call_notes', " 
+			CREATE TABLE IF NOT EXISTS `call_notes` ( 
+				`callnote_call` INT NULL,
+				`callnote_ID` INT NOT NULL AUTO_INCREMENT,
+				PRIMARY KEY (`callnote_ID`),
+				`callnote_datetime` VARCHAR(40) NULL,
+				`callnote_loggedby` VARCHAR(40) NULL,
+				`callnote_note` LONGTEXT NULL
+			) CHARSET utf8"
+		);
+		setupIndexes('call_notes', ['callnote_call',]);
 
 
 

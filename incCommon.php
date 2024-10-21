@@ -106,10 +106,10 @@
 
 	function get_sql_fields($table_name) {
 		$sql_fields = [
-			'invoices' => "`invoices`.`id` as 'id', `invoices`.`code` as 'code', `invoices`.`status` as 'status', if(`invoices`.`date_due`,date_format(`invoices`.`date_due`,'%d/%m/%Y'),'') as 'date_due', IF(    CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`name`), '') as 'client', IF(    CHAR_LENGTH(`clients1`.`contact`), CONCAT_WS('',   `clients1`.`contact`), '') as 'client_contact', IF(    CHAR_LENGTH(`clients1`.`address`), CONCAT_WS('',   `clients1`.`address`), '') as 'client_address', IF(    CHAR_LENGTH(`clients1`.`phone`), CONCAT_WS('',   `clients1`.`phone`), '') as 'client_phone', IF(    CHAR_LENGTH(`clients1`.`email`), CONCAT_WS('',   `clients1`.`email`), '') as 'client_email', IF(    CHAR_LENGTH(`clients1`.`website`), CONCAT_WS('',   `clients1`.`website`), '') as 'client_website', IF(    CHAR_LENGTH(`clients1`.`comments`), CONCAT_WS('',   `clients1`.`comments`), '') as 'client_comments', `invoices`.`subtotal` as 'subtotal', `invoices`.`discount` as 'discount', FORMAT(`invoices`.`tax`, 2) as 'tax', `invoices`.`total` as 'total', `invoices`.`comments` as 'comments', `invoices`.`invoice_template` as 'invoice_template', `invoices`.`created` as 'created', `invoices`.`last_updated` as 'last_updated'",
+			'invoice' => "`invoice`.`id` as 'id', `invoice`.`code` as 'code', `invoice`.`status` as 'status', if(`invoice`.`date_due`,date_format(`invoice`.`date_due`,'%d/%m/%Y'),'') as 'date_due', IF(    CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`name`), '') as 'client', IF(    CHAR_LENGTH(`clients1`.`contact`), CONCAT_WS('',   `clients1`.`contact`), '') as 'client_contact', IF(    CHAR_LENGTH(`clients1`.`address`), CONCAT_WS('',   `clients1`.`address`), '') as 'client_address', IF(    CHAR_LENGTH(`clients1`.`phone`), CONCAT_WS('',   `clients1`.`phone`), '') as 'client_phone', IF(    CHAR_LENGTH(`clients1`.`email`), CONCAT_WS('',   `clients1`.`email`), '') as 'client_email', IF(    CHAR_LENGTH(`clients1`.`website`), CONCAT_WS('',   `clients1`.`website`), '') as 'client_website', IF(    CHAR_LENGTH(`clients1`.`comments`), CONCAT_WS('',   `clients1`.`comments`), '') as 'client_comments', `invoice`.`subtotal` as 'subtotal', `invoice`.`discount` as 'discount', FORMAT(`invoice`.`tax`, 2) as 'tax', `invoice`.`total` as 'total', `invoice`.`comments` as 'comments', `invoice`.`invoice_template` as 'invoice_template', `invoice`.`created` as 'created', `invoice`.`last_updated` as 'last_updated'",
 			'clients' => "`clients`.`id` as 'id', `clients`.`name` as 'name', `clients`.`contact` as 'contact', `clients`.`title` as 'title', `clients`.`address` as 'address', `clients`.`city` as 'city', `clients`.`country` as 'country', CONCAT_WS('-', LEFT(`clients`.`phone`,3), MID(`clients`.`phone`,4,3), RIGHT(`clients`.`phone`,4)) as 'phone', `clients`.`email` as 'email', `clients`.`website` as 'website', `clients`.`comments` as 'comments', `clients`.`unpaid_sales` as 'unpaid_sales', `clients`.`paid_sales` as 'paid_sales', `clients`.`total_sales` as 'total_sales'",
 			'item_prices' => "`item_prices`.`id` as 'id', IF(    CHAR_LENGTH(`items1`.`item_description`), CONCAT_WS('',   `items1`.`item_description`), '') as 'item', `item_prices`.`price` as 'price', if(`item_prices`.`date`,date_format(`item_prices`.`date`,'%d/%m/%Y'),'') as 'date'",
-			'invoice_items' => "`invoice_items`.`id` as 'id', IF(    CHAR_LENGTH(`invoices1`.`code`), CONCAT_WS('',   `invoices1`.`code`), '') as 'invoice', IF(    CHAR_LENGTH(`items1`.`item_description`), CONCAT_WS('',   `items1`.`item_description`), '') as 'item', IF(    CHAR_LENGTH(`items1`.`unit_price`), CONCAT_WS('',   `items1`.`unit_price`), '') as 'current_price', `invoice_items`.`catalog_price` as 'catalog_price', FORMAT(`invoice_items`.`unit_price`, 2) as 'unit_price', FORMAT(`invoice_items`.`qty`, 3) as 'qty', `invoice_items`.`price` as 'price'",
+			'invoice_items' => "`invoice_items`.`id` as 'id', IF(    CHAR_LENGTH(`invoice1`.`code`), CONCAT_WS('',   `invoice1`.`code`), '') as 'invoice', IF(    CHAR_LENGTH(`items1`.`item_description`), CONCAT_WS('',   `items1`.`item_description`), '') as 'item', IF(    CHAR_LENGTH(`items1`.`unit_price`), CONCAT_WS('',   `items1`.`unit_price`), '') as 'current_price', `invoice_items`.`catalog_price` as 'catalog_price', FORMAT(`invoice_items`.`unit_price`, 2) as 'unit_price', FORMAT(`invoice_items`.`qty`, 3) as 'qty', `invoice_items`.`price` as 'price'",
 			'items' => "`items`.`id` as 'id', `items`.`item_description` as 'item_description', `items`.`unit_price` as 'unit_price'",
 			'workorders' => "`workorders`.`wo_ID` as 'wo_ID', `workorders`.`wo_createdby` as 'wo_createdby', `workorders`.`wo_datecreated` as 'wo_datecreated', `workorders`.`wo_Status` as 'wo_Status', IF(    CHAR_LENGTH(`techs1`.`techID`) || CHAR_LENGTH(`techs1`.`techName`), CONCAT_WS('',   `techs1`.`techID`, ' - ', `techs1`.`techName`), '') as 'wo_assignedto', IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' - ', `clients1`.`name`), '') as 'wo_client', `workorders`.`wo_ticket` as 'wo_ticket', IF(    CHAR_LENGTH(`clients2`.`id`) || CHAR_LENGTH(`clients2`.`name`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `clients2`.`id`, ' - ', `clients2`.`name`, ' - ', `assets1`.`asset_serial`), '') as 'wo_asset', `workorders`.`wo_Title` as 'wo_Title', `workorders`.`wo_Description` as 'wo_Description'",
 			'techs' => "`techs`.`techID` as 'techID', `techs`.`techName` as 'techName', `techs`.`techPhone` as 'techPhone', `techs`.`techEmail` as 'techEmail', `techs`.`techPosition` as 'techPosition'",
@@ -118,6 +118,8 @@
 			'technotes' => "`technotes`.`technote_ID` as 'technote_ID', IF(    CHAR_LENGTH(`techs1`.`techID`) || CHAR_LENGTH(`techs1`.`techName`), CONCAT_WS('',   `techs1`.`techID`, ' - ', `techs1`.`techName`), '') as 'technote_tech', `technotes`.`technote_note` as 'technote_note', `technotes`.`technote_author` as 'technote_author', `technotes`.`technote_timestamp` as 'technote_timestamp', `technotes`.`technote_editor` as 'technote_editor', `technotes`.`technote_editorts` as 'technote_editorts'",
 			'tblwopubstatus' => "`tblwopubstatus`.`wopub_ID` as 'wopub_ID', IF(    CHAR_LENGTH(`workorders1`.`wo_ID`) || CHAR_LENGTH(`workorders1`.`wo_Title`), CONCAT_WS('',   `workorders1`.`wo_ID`, ' - ', `workorders1`.`wo_Title`), '') as 'wopub_WO', `tblwopubstatus`.`wopub_Updated` as 'wopub_Updated', `tblwopubstatus`.`wopub_status` as 'wopub_status', `tblwopubstatus`.`wopub_Comments` as 'wopub_Comments'",
 			'asset_notes' => "`asset_notes`.`assetnote_ID` as 'assetnote_ID', IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `assets1`.`asset_ID`, ' - ', `clients1`.`id`, ' - ', `clients1`.`name`), '') as 'assetnote_asset', `asset_notes`.`assetnote_note` as 'assetnote_note', `asset_notes`.`assetnote_author` as 'assetnote_author', `asset_notes`.`assetnote_timestamp` as 'assetnote_timestamp', `asset_notes`.`assetnote_editor` as 'assetnote_editor', `asset_notes`.`assetnote_editorts` as 'assetnote_editorts'",
+			'call_logs' => "`call_logs`.`call_ID` as 'call_ID', `call_logs`.`call_datetime` as 'call_datetime', `call_logs`.`call_loggedby` as 'call_loggedby', IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' : ', `clients1`.`name`), '') as 'call_client', IF(    CHAR_LENGTH(`workorders1`.`wo_ID`) || CHAR_LENGTH(`workorders1`.`wo_Title`), CONCAT_WS('',   `workorders1`.`wo_ID`, ' : ', `workorders1`.`wo_Title`), '') as 'call_workorder', IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `assets1`.`asset_ID`, ' : ', `assets1`.`asset_serial`), '') as 'call_asset', IF(    CHAR_LENGTH(`invoice1`.`id`) || CHAR_LENGTH(if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `invoice1`.`id`, ' : ', if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), '') as 'call_invoice', `call_logs`.`call_logentry` as 'call_logentry'",
+			'call_notes' => "IF(    CHAR_LENGTH(`call_logs1`.`call_ID`) || CHAR_LENGTH(`call_logs1`.`call_datetime`), CONCAT_WS('',   `call_logs1`.`call_ID`, ' : ', `call_logs1`.`call_datetime`), '') as 'callnote_call', `call_notes`.`callnote_ID` as 'callnote_ID', `call_notes`.`callnote_datetime` as 'callnote_datetime', `call_notes`.`callnote_loggedby` as 'callnote_loggedby', `call_notes`.`callnote_note` as 'callnote_note'",
 		];
 
 		if(isset($sql_fields[$table_name])) return $sql_fields[$table_name];
@@ -129,10 +131,10 @@
 
 	function get_sql_from($table_name, $skip_permissions = false, $skip_joins = false, $lower_permissions = false) {
 		$sql_from = [
-			'invoices' => "`invoices` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`invoices`.`client` ",
+			'invoice' => "`invoice` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`invoice`.`client` ",
 			'clients' => "`clients` ",
 			'item_prices' => "`item_prices` LEFT JOIN `items` as items1 ON `items1`.`id`=`item_prices`.`item` ",
-			'invoice_items' => "`invoice_items` LEFT JOIN `invoices` as invoices1 ON `invoices1`.`id`=`invoice_items`.`invoice` LEFT JOIN `items` as items1 ON `items1`.`id`=`invoice_items`.`item` ",
+			'invoice_items' => "`invoice_items` LEFT JOIN `invoice` as invoice1 ON `invoice1`.`id`=`invoice_items`.`invoice` LEFT JOIN `items` as items1 ON `items1`.`id`=`invoice_items`.`item` ",
 			'items' => "`items` ",
 			'workorders' => "`workorders` LEFT JOIN `techs` as techs1 ON `techs1`.`techID`=`workorders`.`wo_assignedto` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`workorders`.`wo_client` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`workorders`.`wo_asset` LEFT JOIN `clients` as clients2 ON `clients2`.`id`=`assets1`.`asset_client` ",
 			'techs' => "`techs` ",
@@ -141,10 +143,12 @@
 			'technotes' => "`technotes` LEFT JOIN `techs` as techs1 ON `techs1`.`techID`=`technotes`.`technote_tech` ",
 			'tblwopubstatus' => "`tblwopubstatus` LEFT JOIN `workorders` as workorders1 ON `workorders1`.`wo_ID`=`tblwopubstatus`.`wopub_WO` ",
 			'asset_notes' => "`asset_notes` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`asset_notes`.`assetnote_asset` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`assets1`.`asset_client` ",
+			'call_logs' => "`call_logs` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`call_logs`.`call_client` LEFT JOIN `workorders` as workorders1 ON `workorders1`.`wo_ID`=`call_logs`.`call_workorder` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`call_logs`.`call_asset` LEFT JOIN `invoice` as invoice1 ON `invoice1`.`id`=`call_logs`.`call_invoice` ",
+			'call_notes' => "`call_notes` LEFT JOIN `call_logs` as call_logs1 ON `call_logs1`.`call_ID`=`call_notes`.`callnote_call` ",
 		];
 
 		$pkey = [
-			'invoices' => 'id',
+			'invoice' => 'id',
 			'clients' => 'id',
 			'item_prices' => 'id',
 			'invoice_items' => 'id',
@@ -156,6 +160,8 @@
 			'technotes' => 'technote_ID',
 			'tblwopubstatus' => 'wopub_ID',
 			'asset_notes' => 'assetnote_ID',
+			'call_logs' => 'call_ID',
+			'call_notes' => 'callnote_ID',
 		];
 
 		if(!isset($sql_from[$table_name])) return false;
@@ -205,7 +211,7 @@
 	function get_defaults($table) {
 		/* array of tables and their fields, with default values (or empty), excluding automatic values */
 		$defaults = [
-			'invoices' => [
+			'invoice' => [
 				'id' => '',
 				'code' => '',
 				'status' => 'Unpaid',
@@ -324,6 +330,23 @@
 				'assetnote_timestamp' => '',
 				'assetnote_editor' => '',
 				'assetnote_editorts' => '',
+			],
+			'call_logs' => [
+				'call_ID' => '',
+				'call_datetime' => '',
+				'call_loggedby' => '',
+				'call_client' => '',
+				'call_workorder' => '',
+				'call_asset' => '',
+				'call_invoice' => '',
+				'call_logentry' => '',
+			],
+			'call_notes' => [
+				'callnote_call' => '',
+				'callnote_ID' => '',
+				'callnote_datetime' => '',
+				'callnote_loggedby' => '',
+				'callnote_note' => '',
 			],
 		];
 

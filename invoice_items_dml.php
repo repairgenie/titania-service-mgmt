@@ -292,7 +292,7 @@ function invoice_items_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 							});
 							$j('[name="invoice"]').val(resp.results[0].id);
 							$j('[id=invoice-container-readonly__RAND__]').html('<span class="match-text" id="invoice-match-text">' + resp.results[0].text + '</span>');
-							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoices_view_parent]').hide(); } else { $j('.btn[id=invoices_view_parent]').show(); }
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoice_view_parent]').hide(); } else { $j('.btn[id=invoice_view_parent]').show(); }
 
 
 							if(typeof(invoice_update_autofills__RAND__) == 'function') invoice_update_autofills__RAND__();
@@ -315,7 +315,7 @@ function invoice_items_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 				AppGini.current_invoice__RAND__.value = e.added.id;
 				AppGini.current_invoice__RAND__.text = e.added.text;
 				$j('[name="invoice"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoices_view_parent]').hide(); } else { $j('.btn[id=invoices_view_parent]').show(); }
+				if(e.added.id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoice_view_parent]').hide(); } else { $j('.btn[id=invoice_view_parent]').show(); }
 
 
 				if(typeof(invoice_update_autofills__RAND__) == 'function') invoice_update_autofills__RAND__();
@@ -329,7 +329,7 @@ function invoice_items_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 					success: function(resp) {
 						$j('[name="invoice"]').val(resp.results[0].id);
 						$j('[id=invoice-container-readonly__RAND__]').html('<span class="match-text" id="invoice-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoices_view_parent]').hide(); } else { $j('.btn[id=invoices_view_parent]').show(); }
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoice_view_parent]').hide(); } else { $j('.btn[id=invoice_view_parent]').show(); }
 
 						if(typeof(invoice_update_autofills__RAND__) == 'function') invoice_update_autofills__RAND__();
 					}
@@ -344,7 +344,7 @@ function invoice_items_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 				data: { id: AppGini.current_invoice__RAND__.value, t: 'invoice_items', f: 'invoice' },
 				success: function(resp) {
 					$j('[id=invoice-container__RAND__], [id=invoice-container-readonly__RAND__]').html('<span class="match-text" id="invoice-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoices_view_parent]').hide(); } else { $j('.btn[id=invoices_view_parent]').show(); }
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoice_view_parent]').hide(); } else { $j('.btn[id=invoice_view_parent]').show(); }
 
 					if(typeof(invoice_update_autofills__RAND__) == 'function') invoice_update_autofills__RAND__();
 				}
@@ -534,7 +534,7 @@ function invoice_items_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode = str_replace('<%%URLCOMBOTEXT(item)%%>', urlencode($combo_item->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => ['parent table name', 'lookup field caption'] */
-	$lookup_fields = ['invoice' => ['invoices', 'Invoice'], 'item' => ['items', 'Item'], ];
+	$lookup_fields = ['invoice' => ['invoice', 'Invoice'], 'item' => ['items', 'Item'], ];
 	foreach($lookup_fields as $luf => $ptfc) {
 		$pt_perm = getTablePermissions($ptfc[0]);
 

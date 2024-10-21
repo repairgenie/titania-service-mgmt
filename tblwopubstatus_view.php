@@ -81,7 +81,7 @@
 	$x->AllowPrinting = (getLoggedAdmin() !== false);
 	$x->AllowPrintingDV = 1;
 	$x->AllowCSV = (getLoggedAdmin() !== false);
-	$x->RecordsPerPage = 75;
+	$x->RecordsPerPage = 100;
 	$x->QuickSearch = 0;
 	$x->QuickSearchText = $Translation['quick search'];
 	$x->ScriptFileName = 'tblwopubstatus_view.php';

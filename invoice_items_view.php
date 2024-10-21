@@ -19,7 +19,7 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = [
 		"`invoice_items`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`invoices1`.`code`), CONCAT_WS('',   `invoices1`.`code`), '') /* Invoice */" => "invoice",
+		"IF(    CHAR_LENGTH(`invoice1`.`code`), CONCAT_WS('',   `invoice1`.`code`), '') /* Invoice */" => "invoice",
 		"IF(    CHAR_LENGTH(`items1`.`item_description`), CONCAT_WS('',   `items1`.`item_description`), '') /* Item */" => "item",
 		"IF(    CHAR_LENGTH(`items1`.`unit_price`), CONCAT_WS('',   `items1`.`unit_price`), '') /* Current price */" => "current_price",
 		"`invoice_items`.`catalog_price`" => "catalog_price",
@@ -30,7 +30,7 @@
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = [
 		1 => '`invoice_items`.`id`',
-		2 => '`invoices1`.`code`',
+		2 => '`invoice1`.`code`',
 		3 => '`items1`.`item_description`',
 		4 => '`items1`.`unit_price`',
 		5 => '`invoice_items`.`catalog_price`',
@@ -42,7 +42,7 @@
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = [
 		"`invoice_items`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`invoices1`.`code`), CONCAT_WS('',   `invoices1`.`code`), '') /* Invoice */" => "invoice",
+		"IF(    CHAR_LENGTH(`invoice1`.`code`), CONCAT_WS('',   `invoice1`.`code`), '') /* Invoice */" => "invoice",
 		"IF(    CHAR_LENGTH(`items1`.`item_description`), CONCAT_WS('',   `items1`.`item_description`), '') /* Item */" => "item",
 		"IF(    CHAR_LENGTH(`items1`.`unit_price`), CONCAT_WS('',   `items1`.`unit_price`), '') /* Current price */" => "current_price",
 		"`invoice_items`.`catalog_price`" => "catalog_price",
@@ -53,7 +53,7 @@
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = [
 		"`invoice_items`.`id`" => "ID",
-		"IF(    CHAR_LENGTH(`invoices1`.`code`), CONCAT_WS('',   `invoices1`.`code`), '') /* Invoice */" => "Invoice",
+		"IF(    CHAR_LENGTH(`invoice1`.`code`), CONCAT_WS('',   `invoice1`.`code`), '') /* Invoice */" => "Invoice",
 		"IF(    CHAR_LENGTH(`items1`.`item_description`), CONCAT_WS('',   `items1`.`item_description`), '') /* Item */" => "Item",
 		"IF(    CHAR_LENGTH(`items1`.`unit_price`), CONCAT_WS('',   `items1`.`unit_price`), '') /* Current price */" => "Current price",
 		"`invoice_items`.`catalog_price`" => "Catalog price at order date",
@@ -65,7 +65,7 @@
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = [
 		"`invoice_items`.`id`" => "id",
-		"IF(    CHAR_LENGTH(`invoices1`.`code`), CONCAT_WS('',   `invoices1`.`code`), '') /* Invoice */" => "invoice",
+		"IF(    CHAR_LENGTH(`invoice1`.`code`), CONCAT_WS('',   `invoice1`.`code`), '') /* Invoice */" => "invoice",
 		"IF(    CHAR_LENGTH(`items1`.`item_description`), CONCAT_WS('',   `items1`.`item_description`), '') /* Item */" => "item",
 		"IF(    CHAR_LENGTH(`items1`.`unit_price`), CONCAT_WS('',   `items1`.`unit_price`), '') /* Current price */" => "current_price",
 		"`invoice_items`.`catalog_price`" => "catalog_price",
@@ -77,7 +77,7 @@
 	// Lookup fields that can be used as filterers
 	$x->filterers = ['invoice' => 'Invoice', 'item' => 'Item', ];
 
-	$x->QueryFrom = "`invoice_items` LEFT JOIN `invoices` as invoices1 ON `invoices1`.`id`=`invoice_items`.`invoice` LEFT JOIN `items` as items1 ON `items1`.`id`=`invoice_items`.`item` ";
+	$x->QueryFrom = "`invoice_items` LEFT JOIN `invoice` as invoice1 ON `invoice1`.`id`=`invoice_items`.`invoice` LEFT JOIN `items` as items1 ON `items1`.`id`=`invoice_items`.`item` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -96,7 +96,7 @@
 	$x->AllowPrinting = 1;
 	$x->AllowPrintingDV = 1;
 	$x->AllowCSV = 1;
-	$x->RecordsPerPage = 10;
+	$x->RecordsPerPage = 100;
 	$x->QuickSearch = 1;
 	$x->QuickSearchText = $Translation['quick search'];
 	$x->ScriptFileName = 'invoice_items_view.php';

@@ -349,7 +349,7 @@ AppGini.ajaxCache = function() {
 	};
 };
 
-function invoices_validateData() {
+function invoice_validateData() {
 	$j('.has-error').removeClass('has-error');
 	var errors = false;
 
@@ -448,6 +448,18 @@ function asset_notes_validateData() {
 	// check all required fields have values
 	if(!AppGini.Validation.fieldRequired('lookup', 'assetnote_asset', 'Asset')) return false;
 	if(!AppGini.Validation.fieldRequired('html', 'assetnote_note', 'Note')) return false;
+
+	return !errors;
+}
+function call_logs_validateData() {
+	$j('.has-error').removeClass('has-error');
+	var errors = false;
+
+	return !errors;
+}
+function call_notes_validateData() {
+	$j('.has-error').removeClass('has-error');
+	var errors = false;
 
 	return !errors;
 }

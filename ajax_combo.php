@@ -32,7 +32,7 @@
 
 	// drop-downs config
 	$lookups = [
-		'invoices' => [
+		'invoice' => [
 			'client' => [
 				'parent_table' => 'clients',
 				'parent_pk_field' => 'id',
@@ -128,10 +128,10 @@
 		],
 		'invoice_items' => [
 			'invoice' => [
-				'parent_table' => 'invoices',
+				'parent_table' => 'invoice',
 				'parent_pk_field' => 'id',
-				'parent_caption' => '`invoices`.`code`',
-				'parent_from' => '`invoices` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`invoices`.`client` ',
+				'parent_caption' => '`invoice`.`code`',
+				'parent_from' => '`invoice` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`invoice`.`client` ',
 				'filterers' => [],
 				'custom_query' => '',
 				'inherit_permissions' => true,
@@ -263,6 +263,65 @@
 				'inherit_permissions' => true,
 				'list_type' => 0,
 				'not_null' => true,
+			],
+		],
+		'call_logs' => [
+			'call_client' => [
+				'parent_table' => 'clients',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`clients`.`id`) || CHAR_LENGTH(`clients`.`name`), CONCAT_WS(\'\', `clients`.`id`, \' : \', `clients`.`name`), \'\')',
+				'parent_from' => '`clients` ',
+				'filterers' => [],
+				'custom_query' => '',
+				'inherit_permissions' => true,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+			'call_workorder' => [
+				'parent_table' => 'workorders',
+				'parent_pk_field' => 'wo_ID',
+				'parent_caption' => 'IF(CHAR_LENGTH(`workorders`.`wo_ID`) || CHAR_LENGTH(`workorders`.`wo_Title`), CONCAT_WS(\'\', `workorders`.`wo_ID`, \' : \', `workorders`.`wo_Title`), \'\')',
+				'parent_from' => '`workorders` LEFT JOIN `techs` as techs1 ON `techs1`.`techID`=`workorders`.`wo_assignedto` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`workorders`.`wo_client` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`workorders`.`wo_asset` LEFT JOIN `clients` as clients2 ON `clients2`.`id`=`assets1`.`asset_client` ',
+				'filterers' => [],
+				'custom_query' => '',
+				'inherit_permissions' => true,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+			'call_asset' => [
+				'parent_table' => 'assets',
+				'parent_pk_field' => 'asset_ID',
+				'parent_caption' => 'IF(CHAR_LENGTH(`assets`.`asset_ID`) || CHAR_LENGTH(`assets`.`asset_serial`), CONCAT_WS(\'\', `assets`.`asset_ID`, \' : \', `assets`.`asset_serial`), \'\')',
+				'parent_from' => '`assets` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`assets`.`asset_client` ',
+				'filterers' => ['call_client' => 'asset_client'],
+				'custom_query' => '',
+				'inherit_permissions' => true,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+			'call_invoice' => [
+				'parent_table' => 'invoice',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`invoice`.`id`) || CHAR_LENGTH(if(`invoice`.`date_due`,date_format(`invoice`.`date_due`,\'%d/%m/%Y\'),\'\')), CONCAT_WS(\'\', `invoice`.`id`, \' : \', if(`invoice`.`date_due`,date_format(`invoice`.`date_due`,\'%d/%m/%Y\'),\'\')), \'\')',
+				'parent_from' => '`invoice` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`invoice`.`client` ',
+				'filterers' => [],
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+		],
+		'call_notes' => [
+			'callnote_call' => [
+				'parent_table' => 'call_logs',
+				'parent_pk_field' => 'call_ID',
+				'parent_caption' => 'IF(CHAR_LENGTH(`call_logs`.`call_ID`) || CHAR_LENGTH(`call_logs`.`call_datetime`), CONCAT_WS(\'\', `call_logs`.`call_ID`, \' : \', `call_logs`.`call_datetime`), \'\')',
+				'parent_from' => '`call_logs` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`call_logs`.`call_client` LEFT JOIN `workorders` as workorders1 ON `workorders1`.`wo_ID`=`call_logs`.`call_workorder` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`call_logs`.`call_asset` LEFT JOIN `invoice` as invoice1 ON `invoice1`.`id`=`call_logs`.`call_invoice` ',
+				'filterers' => [],
+				'custom_query' => '',
+				'inherit_permissions' => true,
+				'list_type' => 0,
+				'not_null' => false,
 			],
 		],
 	];

@@ -164,6 +164,25 @@ function workorders_delete($selected_id, $AllowDeleteOfParents = false, $skipChe
 		return $RetMsg;
 	}
 
+	// child table: call_logs
+	$res = sql("SELECT `wo_ID` FROM `workorders` WHERE `wo_ID`='{$selected_id}'", $eo);
+	$wo_ID = db_fetch_row($res);
+	$rires = sql("SELECT COUNT(1) FROM `call_logs` WHERE `call_workorder`='" . makeSafe($wo_ID[0]) . "'", $eo);
+	$rirow = db_fetch_row($rires);
+	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks) {
+		$RetMsg = $Translation["couldn't delete"];
+		$RetMsg = str_replace('<RelatedRecords>', $rirow[0], $RetMsg);
+		$RetMsg = str_replace('<TableName>', 'call_logs', $RetMsg);
+		return $RetMsg;
+	} elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks) {
+		$RetMsg = $Translation['confirm delete'];
+		$RetMsg = str_replace('<RelatedRecords>', $rirow[0], $RetMsg);
+		$RetMsg = str_replace('<TableName>', 'call_logs', $RetMsg);
+		$RetMsg = str_replace('<Delete>', '<input type="button" class="btn btn-danger" value="' . html_attr($Translation['yes']) . '" onClick="window.location = \'workorders_view.php?SelectedID=' . urlencode($selected_id) . '&delete_x=1&confirmed=1&csrf_token=' . urlencode(csrf_token(false, true)) . '\';">', $RetMsg);
+		$RetMsg = str_replace('<Cancel>', '<input type="button" class="btn btn-success" value="' . html_attr($Translation[ 'no']) . '" onClick="window.location = \'workorders_view.php?SelectedID=' . urlencode($selected_id) . '\';">', $RetMsg);
+		return $RetMsg;
+	}
+
 	sql("DELETE FROM `workorders` WHERE `wo_ID`='{$selected_id}'", $eo);
 
 	// hook: workorders_after_delete

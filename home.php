@@ -78,7 +78,7 @@
 			/* hide current table in homepage? */
 			$tChkHL = array_search($tn, ['invoice_items','workordernotes','technotes','tblwopubstatus','asset_notes']);
 			/* allow homepage 'add new' for current table? */
-			$tChkAHAN = array_search($tn, ['invoices','clients','items']);
+			$tChkAHAN = array_search($tn, ['invoice','clients','items']);
 
 			/* homepageShowCount for current table? */
 			$count_badge = '';

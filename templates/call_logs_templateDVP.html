@@ -1,0 +1,85 @@
+<!-- Edit this file to change the layout of the detail view print preview page -->
+
+
+<div class="panel-heading"><h3 class="panel-title">
+	<strong><%%DETAIL_VIEW_TITLE%%></strong>
+	<div class="hidden-print pull-right">
+		<div class="btn-group">
+			<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> <%%TRANSLATION(Print)%%></button>
+			<button type="submit" id="back" title="<%%TRANSLATION(Cancel Printing)%%>" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> <%%TRANSLATION(Cancel Printing)%%></button>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</h3></div>
+
+<div class="panel-body">
+	<fieldset class="form-horizontal">
+		<!-- Field: Call ID -->
+		<div class="form-group call_logs-call_ID" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Call ID</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(call_ID)%%></div>
+			</div>
+		</div>
+		<!-- Field: Date/Time Logged: -->
+		<div class="form-group call_logs-call_datetime" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Date/Time Logged:</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(call_datetime)%%></div>
+			</div>
+		</div>
+		<!-- Field: Logged By: -->
+		<div class="form-group call_logs-call_loggedby" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Logged By:</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(call_loggedby)%%></div>
+			</div>
+		</div>
+		<!-- Field: Client -->
+		<div class="form-group call_logs-call_client" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Client</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="call_client<%%RND1%%>"><%%COMBOTEXT(call_client)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Related Work Order -->
+		<div class="form-group call_logs-call_workorder" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Related Work Order</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="call_workorder<%%RND1%%>"><%%COMBOTEXT(call_workorder)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Related Asset -->
+		<div class="form-group call_logs-call_asset" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Related Asset</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="call_asset<%%RND1%%>"><%%COMBOTEXT(call_asset)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Related Invoice -->
+		<div class="form-group call_logs-call_invoice" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Related Invoice</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="call_invoice<%%RND1%%>"><%%COMBOTEXT(call_invoice)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Log Entry -->
+		<div class="form-group call_logs-call_logentry" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Log Entry</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(call_logentry)%%></div>
+			</div>
+		</div>
+	</fieldset>
+</div>
+<script>
+	$j(function() {
+		// render read-only checkboxes in DVP
+		$j('form input[type=checkbox]:not(.hidden):checked')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-check"></i>');
+		$j('form input[type=checkbox]:not(.hidden):not(:checked)')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-unchecked"></i>')
+	})
+</script>

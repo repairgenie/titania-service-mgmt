@@ -1,0 +1,14 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the invoice_init() hook (in hooks/invoice.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="invoice-code-<%%VALUE(id)%%>" class="invoice-code"><%%VALUE(code)%%></td>
+		<td id="invoice-status-<%%VALUE(id)%%>" class="invoice-status"><%%VALUE(status)%%></td>
+		<td id="invoice-date_due-<%%VALUE(id)%%>" class="invoice-date_due"><%%VALUE(date_due)%%></td>
+		<td id="invoice-client-<%%VALUE(id)%%>" class="invoice-client"><%%VALUE(client)%%></td>
+		<td id="invoice-client_contact-<%%VALUE(id)%%>" class="invoice-client_contact"><%%VALUE(client_contact)%%></td>
+		<td id="invoice-client_phone-<%%VALUE(id)%%>" class="invoice-client_phone"><%%VALUE(client_phone)%%></td>
+		<td id="invoice-total-<%%VALUE(id)%%>" class="invoice-total text-right"><%%VALUE(total)%%></td>

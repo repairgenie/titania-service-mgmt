@@ -11,23 +11,23 @@ visitorSignup0Tip=["", spacer+"If this option is selected, visitors will not be 
 visitorSignup1Tip=["", spacer+"If this option is selected, visitors can join this group but will not be able to sign in unless the admin approves them from the admin area."];
 visitorSignup2Tip=["", spacer+"If this option is selected, visitors can join this group and will be able to sign in instantly with no need for admin approval."];
 
-// invoices table
-invoices_addTip=["",spacer+"This option allows all members of the group to add records to the 'Invoices' table. A member who adds a record to the table becomes the 'owner' of that record."];
+// invoice table
+invoice_addTip=["",spacer+"This option allows all members of the group to add records to the 'Invoices' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
-invoices_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Invoices' table."];
-invoices_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Invoices' table."];
-invoices_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Invoices' table."];
-invoices_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Invoices' table."];
+invoice_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Invoices' table."];
+invoice_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Invoices' table."];
+invoice_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Invoices' table."];
+invoice_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Invoices' table."];
 
-invoices_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Invoices' table."];
-invoices_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Invoices' table."];
-invoices_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Invoices' table."];
-invoices_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Invoices' table, regardless of their owner."];
+invoice_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Invoices' table."];
+invoice_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Invoices' table."];
+invoice_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Invoices' table."];
+invoice_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Invoices' table, regardless of their owner."];
 
-invoices_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Invoices' table."];
-invoices_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Invoices' table."];
-invoices_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Invoices' table."];
-invoices_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Invoices' table."];
+invoice_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Invoices' table."];
+invoice_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Invoices' table."];
+invoice_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Invoices' table."];
+invoice_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Invoices' table."];
 
 // clients table
 clients_addTip=["",spacer+"This option allows all members of the group to add records to the 'Clients' table. A member who adds a record to the table becomes the 'owner' of that record."];
@@ -226,6 +226,42 @@ asset_notes_delete0Tip=["",spacer+"This option prohibits all members of the grou
 asset_notes_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Asset notes' table."];
 asset_notes_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Asset notes' table."];
 asset_notes_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Asset notes' table."];
+
+// call_logs table
+call_logs_addTip=["",spacer+"This option allows all members of the group to add records to the 'Call Logs' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+call_logs_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Call Logs' table."];
+call_logs_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Call Logs' table."];
+call_logs_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Call Logs' table."];
+call_logs_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Call Logs' table."];
+
+call_logs_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Call Logs' table."];
+call_logs_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Call Logs' table."];
+call_logs_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Call Logs' table."];
+call_logs_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Call Logs' table, regardless of their owner."];
+
+call_logs_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Call Logs' table."];
+call_logs_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Call Logs' table."];
+call_logs_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Call Logs' table."];
+call_logs_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Call Logs' table."];
+
+// call_notes table
+call_notes_addTip=["",spacer+"This option allows all members of the group to add records to the 'Call Notes' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+call_notes_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Call Notes' table."];
+call_notes_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Call Notes' table."];
+call_notes_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Call Notes' table."];
+call_notes_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Call Notes' table."];
+
+call_notes_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Call Notes' table."];
+call_notes_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Call Notes' table."];
+call_notes_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Call Notes' table."];
+call_notes_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Call Notes' table, regardless of their owner."];
+
+call_notes_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Call Notes' table."];
+call_notes_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Call Notes' table."];
+call_notes_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Call Notes' table."];
+call_notes_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Call Notes' table."];
 
 /*
 	Style syntax:

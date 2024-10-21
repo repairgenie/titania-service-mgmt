@@ -76,7 +76,7 @@
 			/* is the current table filter-first? */
 			$tChkFF = array_search($tn, []);
 			/* hide current table in homepage? */
-			$tChkHL = array_search($tn, ['invoice_items','workordernotes','technotes','tblwopubstatus','asset_notes']);
+			$tChkHL = array_search($tn, ['invoice_items','workordernotes','technotes','tblwopubstatus','asset_notes','call_notes']);
 			/* allow homepage 'add new' for current table? */
 			$tChkAHAN = array_search($tn, ['invoice','clients','items']);
 

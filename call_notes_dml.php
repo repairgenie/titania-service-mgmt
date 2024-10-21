@@ -13,10 +13,10 @@ function call_notes_insert(&$error_message = '') {
 	if(!$arrPerm['insert']) return false;
 
 	$data = [
+		'callnote_call' => Request::lookup('callnote_call', ''),
 		'callnote_datetime' => parseCode('<%%creationDateTime%%>', true),
 		'callnote_loggedby' => parseCode('<%%creatorUsername%%>', true),
 		'callnote_note' => Request::val('callnote_note', ''),
-		'field5' => Request::val('field5', ''),
 	];
 
 
@@ -112,8 +112,8 @@ function call_notes_update(&$selected_id, &$error_message = '') {
 	if(!check_record_permission('call_notes', $selected_id, 'edit')) return false;
 
 	$data = [
+		'callnote_call' => Request::lookup('callnote_call', ''),
 		'callnote_note' => Request::val('callnote_note', ''),
-		'field5' => Request::val('field5', ''),
 	];
 
 	// get existing values
@@ -195,11 +195,14 @@ function call_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$dvprint = true;
 	}
 
+	$filterer_callnote_call = Request::val('filterer_callnote_call');
 
 	// populate filterers, starting from children to grand-parents
 
 	// unique random identifier
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
+	// combobox: callnote_call
+	$combo_callnote_call = new DataCombo;
 
 	if($selected_id) {
 		// mm: check member permissions
@@ -222,24 +225,107 @@ function call_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		if(!($row = db_fetch_array($res))) {
 			return error_message($Translation['No records found'], 'call_notes_view.php', false);
 		}
+		$combo_callnote_call->SelectedData = $row['callnote_call'];
 		$urow = $row; /* unsanitized data */
 		$row = array_map('safe_html', $row);
 	} else {
 		$filterField = Request::val('FilterField');
 		$filterOperator = Request::val('FilterOperator');
 		$filterValue = Request::val('FilterValue');
+		$combo_callnote_call->SelectedData = $filterer_callnote_call;
 	}
+	$combo_callnote_call->HTML = '<span id="callnote_call-container' . $rnd1 . '"></span><input type="hidden" name="callnote_call" id="callnote_call' . $rnd1 . '" value="' . html_attr($combo_callnote_call->SelectedData) . '">';
+	$combo_callnote_call->MatchText = '<span id="callnote_call-container-readonly' . $rnd1 . '"></span><input type="hidden" name="callnote_call" id="callnote_call' . $rnd1 . '" value="' . html_attr($combo_callnote_call->SelectedData) . '">';
 
 	ob_start();
 	?>
 
 	<script>
 		// initial lookup values
+		AppGini.current_callnote_call__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['callnote_call'] : htmlspecialchars($filterer_callnote_call, ENT_QUOTES)); ?>"};
 
 		jQuery(function() {
 			setTimeout(function() {
+				if(typeof(callnote_call_reload__RAND__) == 'function') callnote_call_reload__RAND__();
 			}, 50); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
+		function callnote_call_reload__RAND__() {
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint) { ?>
+
+			$j("#callnote_call-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c) {
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: AppGini.current_callnote_call__RAND__.value, t: 'call_notes', f: 'callnote_call' },
+						success: function(resp) {
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="callnote_call"]').val(resp.results[0].id);
+							$j('[id=callnote_call-container-readonly__RAND__]').html('<span class="match-text" id="callnote_call-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=call_logs_view_parent]').hide(); } else { $j('.btn[id=call_logs_view_parent]').show(); }
+
+
+							if(typeof(callnote_call_update_autofills__RAND__) == 'function') callnote_call_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term) { return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 5,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page) { return { s: term, p: page, t: 'call_notes', f: 'callnote_call' }; },
+					results: function(resp, page) { return resp; }
+				},
+				escapeMarkup: function(str) { return str; }
+			}).on('change', function(e) {
+				AppGini.current_callnote_call__RAND__.value = e.added.id;
+				AppGini.current_callnote_call__RAND__.text = e.added.text;
+				$j('[name="callnote_call"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=call_logs_view_parent]').hide(); } else { $j('.btn[id=call_logs_view_parent]').show(); }
+
+
+				if(typeof(callnote_call_update_autofills__RAND__) == 'function') callnote_call_update_autofills__RAND__();
+			});
+
+			if(!$j("#callnote_call-container__RAND__").length) {
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_callnote_call__RAND__.value, t: 'call_notes', f: 'callnote_call' },
+					success: function(resp) {
+						$j('[name="callnote_call"]').val(resp.results[0].id);
+						$j('[id=callnote_call-container-readonly__RAND__]').html('<span class="match-text" id="callnote_call-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=call_logs_view_parent]').hide(); } else { $j('.btn[id=call_logs_view_parent]').show(); }
+
+						if(typeof(callnote_call_update_autofills__RAND__) == 'function') callnote_call_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php } else { ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_callnote_call__RAND__.value, t: 'call_notes', f: 'callnote_call' },
+				success: function(resp) {
+					$j('[id=callnote_call-container__RAND__], [id=callnote_call-container-readonly__RAND__]').html('<span class="match-text" id="callnote_call-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=call_logs_view_parent]').hide(); } else { $j('.btn[id=call_logs_view_parent]').show(); }
+
+					if(typeof(callnote_call_update_autofills__RAND__) == 'function') callnote_call_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
 	</script>
 	<?php
 
@@ -324,7 +410,8 @@ function call_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 	// set records to read only if user can't insert new records and can't edit current record
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)) {
 		$jsReadOnly = '';
-		$jsReadOnly .= "\tjQuery('#field5').replaceWith('<div class=\"form-control-static\" id=\"field5\">' + (jQuery('#field5').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#callnote_call').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#callnote_call_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -334,9 +421,12 @@ function call_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 	}
 
 	// process combos
+	$templateCode = str_replace('<%%COMBO(callnote_call)%%>', $combo_callnote_call->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(callnote_call)%%>', $combo_callnote_call->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(callnote_call)%%>', urlencode($combo_callnote_call->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => ['parent table name', 'lookup field caption'] */
-	$lookup_fields = [];
+	$lookup_fields = ['callnote_call' => ['call_logs', 'Related Call: '], ];
 	foreach($lookup_fields as $luf => $ptfc) {
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -352,14 +442,17 @@ function call_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 	}
 
 	// process images
+	$templateCode = str_replace('<%%UPLOADFILE(callnote_call)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(callnote_ID)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(callnote_datetime)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(callnote_loggedby)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(callnote_note)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(field5)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id) {
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(callnote_call)%%>', safe_html($urow['callnote_call']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(callnote_call)%%>', html_attr($row['callnote_call']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(callnote_call)%%>', urlencode($urow['callnote_call']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(callnote_ID)%%>', safe_html($urow['callnote_ID']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(callnote_ID)%%>', html_attr($row['callnote_ID']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(callnote_ID)%%>', urlencode($urow['callnote_ID']), $templateCode);
@@ -374,10 +467,9 @@ function call_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		}
 		$templateCode = str_replace('<%%VALUE(callnote_note)%%>', nl2br($row['callnote_note']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(callnote_note)%%>', urlencode($urow['callnote_note']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(field5)%%>', safe_html($urow['field5']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(field5)%%>', html_attr($row['field5']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(field5)%%>', urlencode($urow['field5']), $templateCode);
 	} else {
+		$templateCode = str_replace('<%%VALUE(callnote_call)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(callnote_call)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(callnote_ID)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(callnote_ID)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(callnote_datetime)%%>', '<%%creationDateTime%%>', $templateCode);
@@ -385,8 +477,6 @@ function call_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$templateCode = str_replace('<%%VALUE(callnote_loggedby)%%>', '<%%creatorUsername%%>', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(callnote_loggedby)%%>', urlencode('<%%creatorUsername%%>'), $templateCode);
 		$templateCode = str_replace('<%%HTMLAREA(callnote_note)%%>', '<textarea name="callnote_note" id="callnote_note" rows="5"></textarea>', $templateCode);
-		$templateCode = str_replace('<%%VALUE(field5)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(field5)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

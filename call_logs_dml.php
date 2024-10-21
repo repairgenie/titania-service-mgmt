@@ -96,6 +96,25 @@ function call_logs_delete($selected_id, $AllowDeleteOfParents = false, $skipChec
 			);
 	}
 
+	// child table: call_notes
+	$res = sql("SELECT `call_ID` FROM `call_logs` WHERE `call_ID`='{$selected_id}'", $eo);
+	$call_ID = db_fetch_row($res);
+	$rires = sql("SELECT COUNT(1) FROM `call_notes` WHERE `callnote_call`='" . makeSafe($call_ID[0]) . "'", $eo);
+	$rirow = db_fetch_row($rires);
+	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks) {
+		$RetMsg = $Translation["couldn't delete"];
+		$RetMsg = str_replace('<RelatedRecords>', $rirow[0], $RetMsg);
+		$RetMsg = str_replace('<TableName>', 'call_notes', $RetMsg);
+		return $RetMsg;
+	} elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks) {
+		$RetMsg = $Translation['confirm delete'];
+		$RetMsg = str_replace('<RelatedRecords>', $rirow[0], $RetMsg);
+		$RetMsg = str_replace('<TableName>', 'call_notes', $RetMsg);
+		$RetMsg = str_replace('<Delete>', '<input type="button" class="btn btn-danger" value="' . html_attr($Translation['yes']) . '" onClick="window.location = \'call_logs_view.php?SelectedID=' . urlencode($selected_id) . '&delete_x=1&confirmed=1&csrf_token=' . urlencode(csrf_token(false, true)) . '\';">', $RetMsg);
+		$RetMsg = str_replace('<Cancel>', '<input type="button" class="btn btn-success" value="' . html_attr($Translation[ 'no']) . '" onClick="window.location = \'call_logs_view.php?SelectedID=' . urlencode($selected_id) . '\';">', $RetMsg);
+		return $RetMsg;
+	}
+
 	sql("DELETE FROM `call_logs` WHERE `call_ID`='{$selected_id}'", $eo);
 
 	// hook: call_logs_after_delete
@@ -208,7 +227,6 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 
 	// populate filterers, starting from children to grand-parents
 	if($filterer_call_asset && !$filterer_call_client) $filterer_call_client = sqlValue("select asset_client from assets where asset_ID='" . makeSafe($filterer_call_asset) . "'");
-	if($filterer_call_invoice && !$filterer_call_client) $filterer_call_client = sqlValue("select client from ca where id='" . makeSafe($filterer_call_invoice) . "'");
 
 	// unique random identifier
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
@@ -218,7 +236,7 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$combo_call_workorder = new DataCombo;
 	// combobox: call_asset, filterable by: call_client
 	$combo_call_asset = new DataCombo;
-	// combobox: call_invoice, filterable by: call_client
+	// combobox: call_invoice
 	$combo_call_invoice = new DataCombo;
 
 	if($selected_id) {
@@ -281,7 +299,7 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				if(typeof(call_client_reload__RAND__) == 'function') call_client_reload__RAND__();
 				if(typeof(call_workorder_reload__RAND__) == 'function') call_workorder_reload__RAND__();
 				<?php echo (!$AllowUpdate || $dvprint ? 'if(typeof(call_asset_reload__RAND__) == \'function\') call_asset_reload__RAND__(AppGini.current_call_client__RAND__.value);' : ''); ?>
-				<?php echo (!$AllowUpdate || $dvprint ? 'if(typeof(call_invoice_reload__RAND__) == \'function\') call_invoice_reload__RAND__(AppGini.current_call_client__RAND__.value);' : ''); ?>
+				if(typeof(call_invoice_reload__RAND__) == 'function') call_invoice_reload__RAND__();
 			}, 50); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
 		function call_client_reload__RAND__() {
@@ -304,7 +322,6 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=clients_view_parent]').hide(); } else { $j('.btn[id=clients_view_parent]').show(); }
 
 						if(typeof(call_asset_reload__RAND__) == 'function') call_asset_reload__RAND__(AppGini.current_call_client__RAND__.value);
-						if(typeof(call_invoice_reload__RAND__) == 'function') call_invoice_reload__RAND__(AppGini.current_call_client__RAND__.value);
 
 							if(typeof(call_client_update_autofills__RAND__) == 'function') call_client_update_autofills__RAND__();
 						}
@@ -329,7 +346,6 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				if(e.added.id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=clients_view_parent]').hide(); } else { $j('.btn[id=clients_view_parent]').show(); }
 
 						if(typeof(call_asset_reload__RAND__) == 'function') call_asset_reload__RAND__(AppGini.current_call_client__RAND__.value);
-						if(typeof(call_invoice_reload__RAND__) == 'function') call_invoice_reload__RAND__(AppGini.current_call_client__RAND__.value);
 
 				if(typeof(call_client_update_autofills__RAND__) == 'function') call_client_update_autofills__RAND__();
 			});
@@ -519,7 +535,7 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 		<?php } ?>
 
 		}
-		function call_invoice_reload__RAND__(filterer_call_client) {
+		function call_invoice_reload__RAND__() {
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint) { ?>
 
 			$j("#call_invoice-container__RAND__").select2({
@@ -528,7 +544,7 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 					$j.ajax({
 						url: 'ajax_combo.php',
 						dataType: 'json',
-						data: { filterer_call_client: filterer_call_client, id: AppGini.current_call_invoice__RAND__.value, t: 'call_logs', f: 'call_invoice' },
+						data: { id: AppGini.current_call_invoice__RAND__.value, t: 'call_logs', f: 'call_invoice' },
 						success: function(resp) {
 							c({
 								id: resp.results[0].id,
@@ -536,7 +552,7 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 							});
 							$j('[name="call_invoice"]').val(resp.results[0].id);
 							$j('[id=call_invoice-container-readonly__RAND__]').html('<span class="match-text" id="call_invoice-match-text">' + resp.results[0].text + '</span>');
-							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=ca_view_parent]').hide(); } else { $j('.btn[id=ca_view_parent]').show(); }
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoice_view_parent]').hide(); } else { $j('.btn[id=invoice_view_parent]').show(); }
 
 
 							if(typeof(call_invoice_update_autofills__RAND__) == 'function') call_invoice_update_autofills__RAND__();
@@ -551,7 +567,7 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 					url: 'ajax_combo.php',
 					dataType: 'json',
 					cache: true,
-					data: function(term, page) { return { filterer_call_client: filterer_call_client, s: term, p: page, t: 'call_logs', f: 'call_invoice' }; },
+					data: function(term, page) { return { s: term, p: page, t: 'call_logs', f: 'call_invoice' }; },
 					results: function(resp, page) { return resp; }
 				},
 				escapeMarkup: function(str) { return str; }
@@ -559,7 +575,7 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				AppGini.current_call_invoice__RAND__.value = e.added.id;
 				AppGini.current_call_invoice__RAND__.text = e.added.text;
 				$j('[name="call_invoice"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=ca_view_parent]').hide(); } else { $j('.btn[id=ca_view_parent]').show(); }
+				if(e.added.id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoice_view_parent]').hide(); } else { $j('.btn[id=invoice_view_parent]').show(); }
 
 
 				if(typeof(call_invoice_update_autofills__RAND__) == 'function') call_invoice_update_autofills__RAND__();
@@ -573,7 +589,7 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 					success: function(resp) {
 						$j('[name="call_invoice"]').val(resp.results[0].id);
 						$j('[id=call_invoice-container-readonly__RAND__]').html('<span class="match-text" id="call_invoice-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=ca_view_parent]').hide(); } else { $j('.btn[id=ca_view_parent]').show(); }
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoice_view_parent]').hide(); } else { $j('.btn[id=invoice_view_parent]').show(); }
 
 						if(typeof(call_invoice_update_autofills__RAND__) == 'function') call_invoice_update_autofills__RAND__();
 					}
@@ -588,7 +604,7 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 				data: { id: AppGini.current_call_invoice__RAND__.value, t: 'call_logs', f: 'call_invoice' },
 				success: function(resp) {
 					$j('[id=call_invoice-container__RAND__], [id=call_invoice-container-readonly__RAND__]').html('<span class="match-text" id="call_invoice-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=ca_view_parent]').hide(); } else { $j('.btn[id=ca_view_parent]').show(); }
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=invoice_view_parent]').hide(); } else { $j('.btn[id=invoice_view_parent]').show(); }
 
 					if(typeof(call_invoice_update_autofills__RAND__) == 'function') call_invoice_update_autofills__RAND__();
 				}
@@ -711,7 +727,7 @@ function call_logs_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $
 	$templateCode = str_replace('<%%URLCOMBOTEXT(call_invoice)%%>', urlencode($combo_call_invoice->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => ['parent table name', 'lookup field caption'] */
-	$lookup_fields = ['call_client' => ['clients', 'Client'], 'call_workorder' => ['workorders', 'Related Work Order'], 'call_asset' => ['assets', 'Related Asset'], 'call_invoice' => ['ca', 'Related Invoice'], ];
+	$lookup_fields = ['call_client' => ['clients', 'Client'], 'call_workorder' => ['workorders', 'Related Work Order'], 'call_asset' => ['assets', 'Related Asset'], 'call_invoice' => ['invoice', 'Related Invoice'], ];
 	foreach($lookup_fields as $luf => $ptfc) {
 		$pt_perm = getTablePermissions($ptfc[0]);
 

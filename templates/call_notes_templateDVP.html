@@ -14,6 +14,13 @@
 
 <div class="panel-body">
 	<fieldset class="form-horizontal">
+		<!-- Field: Related Call:  -->
+		<div class="form-group call_notes-callnote_call" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Related Call: </label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="callnote_call<%%RND1%%>"><%%COMBOTEXT(callnote_call)%%></span></div>
+			</div>
+		</div>
 		<!-- Field: Note ID -->
 		<div class="form-group call_notes-callnote_ID" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">Note ID</label>
@@ -40,13 +47,6 @@
 			<label class="col-xs-3 control-label">Call Notes</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%VALUE(callnote_note)%%></div>
-			</div>
-		</div>
-		<!-- Field: Field 5 -->
-		<div class="form-group call_notes-field5" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Field 5</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(field5)%%></div>
 			</div>
 		</div>
 	</fieldset>

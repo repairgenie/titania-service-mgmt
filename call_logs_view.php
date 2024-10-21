@@ -24,7 +24,7 @@
 		"IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' : ', `clients1`.`name`), '') /* Client */" => "call_client",
 		"IF(    CHAR_LENGTH(`workorders1`.`wo_ID`) || CHAR_LENGTH(`workorders1`.`wo_Title`), CONCAT_WS('',   `workorders1`.`wo_ID`, ' : ', `workorders1`.`wo_Title`), '') /* Related Work Order */" => "call_workorder",
 		"IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `assets1`.`asset_ID`, ' : ', `assets1`.`asset_serial`), '') /* Related Asset */" => "call_asset",
-		"IF(    CHAR_LENGTH(`ca1`.`id`) || CHAR_LENGTH(if(`ca1`.`date_due`,date_format(`ca1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `ca1`.`id`, ' : ', if(`ca1`.`date_due`,date_format(`ca1`.`date_due`,'%d/%m/%Y'),'')), '') /* Related Invoice */" => "call_invoice",
+		"IF(    CHAR_LENGTH(`invoice1`.`id`) || CHAR_LENGTH(if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `invoice1`.`id`, ' : ', if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), '') /* Related Invoice */" => "call_invoice",
 		"`call_logs`.`call_logentry`" => "call_logentry",
 	];
 	// mapping incoming sort by requests to actual query fields
@@ -47,7 +47,7 @@
 		"IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' : ', `clients1`.`name`), '') /* Client */" => "call_client",
 		"IF(    CHAR_LENGTH(`workorders1`.`wo_ID`) || CHAR_LENGTH(`workorders1`.`wo_Title`), CONCAT_WS('',   `workorders1`.`wo_ID`, ' : ', `workorders1`.`wo_Title`), '') /* Related Work Order */" => "call_workorder",
 		"IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `assets1`.`asset_ID`, ' : ', `assets1`.`asset_serial`), '') /* Related Asset */" => "call_asset",
-		"IF(    CHAR_LENGTH(`ca1`.`id`) || CHAR_LENGTH(if(`ca1`.`date_due`,date_format(`ca1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `ca1`.`id`, ' : ', if(`ca1`.`date_due`,date_format(`ca1`.`date_due`,'%d/%m/%Y'),'')), '') /* Related Invoice */" => "call_invoice",
+		"IF(    CHAR_LENGTH(`invoice1`.`id`) || CHAR_LENGTH(if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `invoice1`.`id`, ' : ', if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), '') /* Related Invoice */" => "call_invoice",
 		"`call_logs`.`call_logentry`" => "call_logentry",
 	];
 	// Fields that can be filtered
@@ -58,7 +58,7 @@
 		"IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' : ', `clients1`.`name`), '') /* Client */" => "Client",
 		"IF(    CHAR_LENGTH(`workorders1`.`wo_ID`) || CHAR_LENGTH(`workorders1`.`wo_Title`), CONCAT_WS('',   `workorders1`.`wo_ID`, ' : ', `workorders1`.`wo_Title`), '') /* Related Work Order */" => "Related Work Order",
 		"IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `assets1`.`asset_ID`, ' : ', `assets1`.`asset_serial`), '') /* Related Asset */" => "Related Asset",
-		"IF(    CHAR_LENGTH(`ca1`.`id`) || CHAR_LENGTH(if(`ca1`.`date_due`,date_format(`ca1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `ca1`.`id`, ' : ', if(`ca1`.`date_due`,date_format(`ca1`.`date_due`,'%d/%m/%Y'),'')), '') /* Related Invoice */" => "Related Invoice",
+		"IF(    CHAR_LENGTH(`invoice1`.`id`) || CHAR_LENGTH(if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `invoice1`.`id`, ' : ', if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), '') /* Related Invoice */" => "Related Invoice",
 		"`call_logs`.`call_logentry`" => "Log Entry",
 	];
 
@@ -70,14 +70,14 @@
 		"IF(    CHAR_LENGTH(`clients1`.`id`) || CHAR_LENGTH(`clients1`.`name`), CONCAT_WS('',   `clients1`.`id`, ' : ', `clients1`.`name`), '') /* Client */" => "call_client",
 		"IF(    CHAR_LENGTH(`workorders1`.`wo_ID`) || CHAR_LENGTH(`workorders1`.`wo_Title`), CONCAT_WS('',   `workorders1`.`wo_ID`, ' : ', `workorders1`.`wo_Title`), '') /* Related Work Order */" => "call_workorder",
 		"IF(    CHAR_LENGTH(`assets1`.`asset_ID`) || CHAR_LENGTH(`assets1`.`asset_serial`), CONCAT_WS('',   `assets1`.`asset_ID`, ' : ', `assets1`.`asset_serial`), '') /* Related Asset */" => "call_asset",
-		"IF(    CHAR_LENGTH(`ca1`.`id`) || CHAR_LENGTH(if(`ca1`.`date_due`,date_format(`ca1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `ca1`.`id`, ' : ', if(`ca1`.`date_due`,date_format(`ca1`.`date_due`,'%d/%m/%Y'),'')), '') /* Related Invoice */" => "call_invoice",
+		"IF(    CHAR_LENGTH(`invoice1`.`id`) || CHAR_LENGTH(if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), CONCAT_WS('',   `invoice1`.`id`, ' : ', if(`invoice1`.`date_due`,date_format(`invoice1`.`date_due`,'%d/%m/%Y'),'')), '') /* Related Invoice */" => "call_invoice",
 		"`call_logs`.`call_logentry`" => "call_logentry",
 	];
 
 	// Lookup fields that can be used as filterers
 	$x->filterers = ['call_client' => 'Client', 'call_workorder' => 'Related Work Order', 'call_asset' => 'Related Asset', 'call_invoice' => 'Related Invoice', ];
 
-	$x->QueryFrom = "`call_logs` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`call_logs`.`call_client` LEFT JOIN `workorders` as workorders1 ON `workorders1`.`wo_ID`=`call_logs`.`call_workorder` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`call_logs`.`call_asset` LEFT JOIN `ca` as ca1 ON `ca1`.`id`=`call_logs`.`call_invoice` ";
+	$x->QueryFrom = "`call_logs` LEFT JOIN `clients` as clients1 ON `clients1`.`id`=`call_logs`.`call_client` LEFT JOIN `workorders` as workorders1 ON `workorders1`.`wo_ID`=`call_logs`.`call_workorder` LEFT JOIN `assets` as assets1 ON `assets1`.`asset_ID`=`call_logs`.`call_asset` LEFT JOIN `invoice` as invoice1 ON `invoice1`.`id`=`call_logs`.`call_invoice` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 

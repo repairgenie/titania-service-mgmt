@@ -19,6 +19,15 @@
 		<div class="col-md-8 col-lg-10" id="call_notes_dv_form">
 			<fieldset class="form-horizontal">
 
+				<!-- Field: Related Call:  -->
+				<div class="form-group call_notes-callnote_call">
+					<hr class="hidden-md hidden-lg">
+					<label class="control-label col-lg-3" for="callnote_call" data-parent_link="view_parent_modal">Related Call: </label>
+					<div class="col-lg-9">
+						<div class="lookup-flex"><%%COMBO(callnote_call)%%><%%PLINK(callnote_call)%%><%%ADDNEW(call_logs)%%></div>
+					</div>
+				</div>
+
 				<!-- Field: Note ID -->
 				<div class="form-group call_notes-callnote_ID">
 					<hr class="hidden-md hidden-lg">
@@ -52,15 +61,6 @@
 					<label class="control-label col-lg-3" for="callnote_note">Call Notes</label>
 					<div class="col-lg-9 has-nicedit">
 						<%%HTMLAREA(callnote_note)%%>
-					</div>
-				</div>
-
-				<!-- Field: Field 5 -->
-				<div class="form-group call_notes-field5">
-					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3" for="field5">Field 5</label>
-					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="field5" id="field5" value="<%%VALUE(field5)%%>">
 					</div>
 				</div>
 
@@ -114,7 +114,7 @@
 			if(!$j('.table_view').length || $j('[name=SelectedID]').val().length) {
 				AppGini.once({
 					condition: function() {
-						return $j('.form-group.call_notes-callnote_note')
+						return $j('.form-group.call_notes-callnote_call')
 									.find('.nicEdit-main, .select2-container, input[type=radio]')
 									.length > 0
 								// or read-only DV
@@ -123,7 +123,7 @@
 					action: function() {
 						$j('#call_notes_dv_container-loading').addClass('hidden');
 						$j('#call_notes_dv_container').removeClass('hidden');
-						AppGini.focusFormElement('call_notes', 'callnote_note');
+						AppGini.focusFormElement('call_notes', 'callnote_call');
 					},
 					timeout:  5000,
 					doActionOnTimeout:  true

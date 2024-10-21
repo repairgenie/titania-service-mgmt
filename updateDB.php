@@ -33,12 +33,7 @@
 				`invoice_template` VARCHAR(100) NULL,
 				`created` VARCHAR(200) NULL,
 				`last_updated` VARCHAR(200) NULL
-			) CHARSET utf8", [
-				"ALTER TABLE `ca` RENAME `invoice`",
-				"UPDATE `membership_userrecords` SET `tableName`='invoice' WHERE `tableName`='ca'",
-				"UPDATE `membership_userpermissions` SET `tableName`='invoice' WHERE `tableName`='ca'",
-				"UPDATE `membership_grouppermissions` SET `tableName`='invoice' WHERE `tableName`='ca'",
-			]
+			) CHARSET utf8"
 		);
 		setupIndexes('invoice', ['client',]);
 

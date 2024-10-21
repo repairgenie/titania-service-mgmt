@@ -18,16 +18,16 @@
 
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = [
+		"IF(    CHAR_LENGTH(`call_logs1`.`call_ID`) || CHAR_LENGTH(`call_logs1`.`call_datetime`), CONCAT_WS('',   `call_logs1`.`call_ID`, ' : ', `call_logs1`.`call_datetime`), '') /* Related Call:  */" => "callnote_call",
 		"`call_notes`.`callnote_ID`" => "callnote_ID",
 		"`call_notes`.`callnote_datetime`" => "callnote_datetime",
 		"`call_notes`.`callnote_loggedby`" => "callnote_loggedby",
 		"`call_notes`.`callnote_note`" => "callnote_note",
-		"`call_notes`.`field5`" => "field5",
 	];
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = [
-		1 => '`call_notes`.`callnote_ID`',
-		2 => 2,
+		1 => 1,
+		2 => '`call_notes`.`callnote_ID`',
 		3 => 3,
 		4 => 4,
 		5 => 5,
@@ -35,34 +35,34 @@
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = [
+		"IF(    CHAR_LENGTH(`call_logs1`.`call_ID`) || CHAR_LENGTH(`call_logs1`.`call_datetime`), CONCAT_WS('',   `call_logs1`.`call_ID`, ' : ', `call_logs1`.`call_datetime`), '') /* Related Call:  */" => "callnote_call",
 		"`call_notes`.`callnote_ID`" => "callnote_ID",
 		"`call_notes`.`callnote_datetime`" => "callnote_datetime",
 		"`call_notes`.`callnote_loggedby`" => "callnote_loggedby",
 		"`call_notes`.`callnote_note`" => "callnote_note",
-		"`call_notes`.`field5`" => "field5",
 	];
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = [
+		"IF(    CHAR_LENGTH(`call_logs1`.`call_ID`) || CHAR_LENGTH(`call_logs1`.`call_datetime`), CONCAT_WS('',   `call_logs1`.`call_ID`, ' : ', `call_logs1`.`call_datetime`), '') /* Related Call:  */" => "Related Call: ",
 		"`call_notes`.`callnote_ID`" => "Note ID",
 		"`call_notes`.`callnote_datetime`" => "Note Logged: ",
 		"`call_notes`.`callnote_loggedby`" => "Logged By:",
 		"`call_notes`.`callnote_note`" => "Call Notes",
-		"`call_notes`.`field5`" => "Field 5",
 	];
 
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = [
+		"IF(    CHAR_LENGTH(`call_logs1`.`call_ID`) || CHAR_LENGTH(`call_logs1`.`call_datetime`), CONCAT_WS('',   `call_logs1`.`call_ID`, ' : ', `call_logs1`.`call_datetime`), '') /* Related Call:  */" => "callnote_call",
 		"`call_notes`.`callnote_ID`" => "callnote_ID",
 		"`call_notes`.`callnote_datetime`" => "callnote_datetime",
 		"`call_notes`.`callnote_loggedby`" => "callnote_loggedby",
 		"`call_notes`.`callnote_note`" => "callnote_note",
-		"`call_notes`.`field5`" => "field5",
 	];
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = [];
+	$x->filterers = ['callnote_call' => 'Related Call: ', ];
 
-	$x->QueryFrom = "`call_notes` ";
+	$x->QueryFrom = "`call_notes` LEFT JOIN `call_logs` as call_logs1 ON `call_logs1`.`call_ID`=`call_notes`.`callnote_call` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -90,8 +90,8 @@
 	$x->PrimaryKey = '`call_notes`.`callnote_ID`';
 
 	$x->ColWidth = [150, 150, 150, 150, 150, ];
-	$x->ColCaption = ['Note ID', 'Note Logged: ', 'Logged By:', 'Call Notes', 'Field 5', ];
-	$x->ColFieldName = ['callnote_ID', 'callnote_datetime', 'callnote_loggedby', 'callnote_note', 'field5', ];
+	$x->ColCaption = ['Related Call: ', 'Note ID', 'Note Logged: ', 'Logged By:', 'Call Notes', ];
+	$x->ColFieldName = ['callnote_call', 'callnote_ID', 'callnote_datetime', 'callnote_loggedby', 'callnote_note', ];
 	$x->ColNumber  = [1, 2, 3, 4, 5, ];
 
 	// template paths below are based on the app main directory

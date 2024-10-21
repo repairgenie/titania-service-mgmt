@@ -39,7 +39,7 @@
 
 	function get_table_groups($skip_authentication = false) {
 		$tables = getTableList($skip_authentication);
-		$all_groups = ['None', 'Clients', 'Work Management', 'Sales &amp; Billing'];
+		$all_groups = ['None', 'Clients', 'Work Management', 'Sales &amp; Billing', 'Call Management'];
 
 		$groups = [];
 		foreach($all_groups as $grp) {

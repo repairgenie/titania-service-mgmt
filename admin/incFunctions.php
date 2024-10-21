@@ -100,7 +100,8 @@
 			'None',
 			'Clients',
 			'Work Management',
-			'Sales &amp; Billing'
+			'Sales &amp; Billing',
+			'Call Management'
 		];
 
 		$all_tables = [
@@ -193,14 +194,14 @@
 					'Caption' => 'Call Logs',
 					'Description' => '',
 					'tableIcon' => 'table.gif',
-					'group' => $tg[0],
+					'group' => $tg[4],
 					'homepageShowCount' => 0
 				],
 				'call_notes' => [
 					'Caption' => 'Call Notes',
 					'Description' => '',
 					'tableIcon' => 'table.gif',
-					'group' => $tg[0],
+					'group' => $tg[4],
 					'homepageShowCount' => 0
 				],
 		];
@@ -231,8 +232,8 @@
 			'technotes' => ['Technician Notes', '', 'table.gif', 'Work Management'],
 			'tblwopubstatus' => ['Work Order Status', '', 'table.gif', 'Work Management'],
 			'asset_notes' => ['Asset notes', '', 'table.gif', 'Work Management'],
-			'call_logs' => ['Call Logs', '', 'table.gif', 'None'],
-			'call_notes' => ['Call Notes', '', 'table.gif', 'None'],
+			'call_logs' => ['Call Logs', '', 'table.gif', 'Call Management'],
+			'call_notes' => ['Call Notes', '', 'table.gif', 'Call Management'],
 		];
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 

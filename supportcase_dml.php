@@ -18,7 +18,7 @@ function supportcase_insert(&$error_message = '') {
 		'case_client' => Request::lookup('case_client', ''),
 		'case_call' => Request::lookup('case_call', ''),
 		'case_datetime' => parseCode('<%%creationDateTime%%>', true),
-		'case_openedby' => Request::val('case_openedby', ''),
+		'case_openedby' => parseCode('<%%creatorUsername%%>', true),
 		'case_external' => Request::val('case_external', ''),
 		'case_subject' => Request::val('case_subject', ''),
 		'case_description' => Request::val('case_description', ''),
@@ -139,7 +139,6 @@ function supportcase_update(&$selected_id, &$error_message = '') {
 		'case_status' => Request::val('case_status', ''),
 		'case_client' => Request::lookup('case_client', ''),
 		'case_call' => Request::lookup('case_call', ''),
-		'case_openedby' => Request::val('case_openedby', ''),
 		'case_external' => Request::val('case_external', ''),
 		'case_subject' => Request::val('case_subject', ''),
 		'case_description' => Request::val('case_description', ''),
@@ -551,7 +550,6 @@ function supportcase_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		$jsReadOnly .= "\tjQuery('#case_client_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#case_call').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#case_call_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
-		$jsReadOnly .= "\tjQuery('#case_openedby').replaceWith('<div class=\"form-control-static\" id=\"case_openedby\">' + (jQuery('#case_openedby').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#case_external').replaceWith('<div class=\"form-control-static\" id=\"case_external\">' + (jQuery('#case_external').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#case_subject').replaceWith('<div class=\"form-control-static\" id=\"case_subject\">' + (jQuery('#case_subject').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
@@ -618,8 +616,7 @@ function supportcase_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		$templateCode = str_replace('<%%URLVALUE(case_call)%%>', urlencode($urow['case_call']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(case_datetime)%%>', safe_html($urow['case_datetime']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(case_datetime)%%>', urlencode($urow['case_datetime']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(case_openedby)%%>', safe_html($urow['case_openedby']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(case_openedby)%%>', html_attr($row['case_openedby']), $templateCode);
+		$templateCode = str_replace('<%%VALUE(case_openedby)%%>', safe_html($urow['case_openedby']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(case_openedby)%%>', urlencode($urow['case_openedby']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(case_external)%%>', safe_html($urow['case_external']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(case_external)%%>', html_attr($row['case_external']), $templateCode);
@@ -647,8 +644,8 @@ function supportcase_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1,
 		$templateCode = str_replace('<%%URLVALUE(case_call)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(case_datetime)%%>', '<%%creationDateTime%%>', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(case_datetime)%%>', urlencode('<%%creationDateTime%%>'), $templateCode);
-		$templateCode = str_replace('<%%VALUE(case_openedby)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(case_openedby)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(case_openedby)%%>', '<%%creatorUsername%%>', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(case_openedby)%%>', urlencode('<%%creatorUsername%%>'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(case_external)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(case_external)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(case_subject)%%>', '', $templateCode);

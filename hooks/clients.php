@@ -26,10 +26,6 @@
 	*/
 
 	function clients_init(&$options, $memberInfo, &$args) {
-		/* Inserted by Search Page Maker for AppGini on 2020-11-25 06:38:04 */
-		$options->FilterPage = 'hooks/clients_filter.php';
-		/* End of Search Page Maker for AppGini code */
-
 
 		return TRUE;
 	}
@@ -339,17 +335,17 @@
 	 * 
 	 * @return
 	 * A 2D array describing custom record actions. The format of the array is:
-	 *   array(
-	 *      array(
+	 *   [
+	 *      [
 	 *         'title' => 'Title', // the title/label of the custom action as displayed to users
 	 *         'function' => 'js_function_name', // the name of a javascript function to be executed when user selects this action
 	 *         'class' => 'CSS class(es) to apply to the action title', // optional, refer to Bootstrap documentation for CSS classes
 	 *         'icon' => 'icon name' // optional, refer to Bootstrap glyphicons for supported names
-	 *      ), ...
-	 *   )
+	 *      ], ...
+	 *   ]
 	*/
 
 	function clients_batch_actions(&$args) {
 
-		return array();
+		return [];
 	}

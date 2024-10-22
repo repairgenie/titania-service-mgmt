@@ -5,9 +5,6 @@
 	 * when a member signs in successfully and when a member fails to sign in.
 	*/
 
-	define('CURRENCY_TITLE', "US Dollars");
-	define('CURRENCY_SYMBOL', "USD");
-	
 	/**
 	 * This hook function is called when a member successfully signs in. 
 	 * It can be used for example to redirect members to specific pages rather than the home page, 
@@ -105,91 +102,28 @@
 
 	}
 
-	function print_invoice_query($id){
-		$eo = ['silentErrors' => true];
-		$query = sql("
-					SELECT
-						C.`name`, 
-						I.`date_due`, I.`code`, I.`subtotal`, I.`discount`, I.`tax`, I.`total`,
-						T.`item_description`, 
-						IT.`unit_price`, IT.`qty`, IT.`price` 
-					FROM 
-						`clients` AS C INNER JOIN 
-						`invoices` AS I ON C.`id` = I.`client` INNER JOIN 
-						`invoice_items` AS IT ON IT.`invoice` = I.`id` INNER JOIN 
-						`items` AS T ON T.`id` = IT.`item` 
-					WHERE I.`id` = '{$id}'", $eo
-				);
+	/**
+	 * Modify options for displaying child records in the detail view of
+	 * a parent record
+	 *
+	 * Config for the current child table and lookup field is accessible
+	 * at $config[$childTable][$childLookupField]
+	 * 
+	 * For documentation of the contents of this array, please
+	 * @see https://bigprof.com/appgini/help/advanced-topics/hooks/global-hooks#child_records_config
+	 * 
+	 * For default configuration, please check the $pcConfig array defined in the
+	 * generated parent-children.php file
+	 * 
+	 * @param      string  $childTable        The current child table name
+	 * @param      string  $childLookupField  The name of the lookup field in the child table 
+	 *                                        that is linked to the parent table
+	 * @param      array   $config            The configuration array for displaying child records
+	 *                                        for the current user, passed by reference
+	 * 
+	 * @return none
+	 */
+	function child_records_config($childTable, $childLookupField, &$config) {
 
-		$results = $totals = [];
-
-		while($row = db_fetch_assoc($query)) {
-			if(!$totals) {
-				$totals_keys = ['code', 'name', 'date_due', 'subtotal', 'discount', 'tax', 'total'];
-				foreach($row as $key => $value)
-					if(in_array($key, $totals_keys)) $totals[$key] = $value;
-				$totals['discount_amount'] = round($totals['subtotal'] * $totals['discount'] / 100, 2);
-				$totals['tax_amount'] = round(($totals['subtotal'] - $totals['discount_amount']) * $totals['tax'] / 100, 2);
-			}
-
-			$results[] = [
-				'item_description' => $row['item_description'],
-				'unit_price'  	   => $row['unit_price'],
-				'qty' 		  	   => $row['qty'],
-				'price'			   => $row['price']
-			];
-		}
-
-		if(count($totals) > 0) $results['totals'] = $totals;
-
-		return $results;
-	}
-	
-	function convertNumberToWord($num = false) {
-		$num = str_replace([',', ' '], '', trim($num));
-		if(!$num) return false;
-
-		$fractions = round($num - intval($num), 2);
-		$num = (int) $num;
-		$words = [];
-		$list1 = [
-			'', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven',
-			'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'
-		];
-		$list2 = ['', 'Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety', 'Hundred'];
-		$list3 = [
-			'', 'Thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion', 'septillion',
-			'Octillion', 'Nonillion', 'decillion', 'undecillion', 'duodecillion', 'tredecillion', 'quattuordecillion',
-			'quindecillion', 'sexdecillion', 'septendecillion', 'octodecillion', 'novemdecillion', 'vigintillion'
-		];
-
-		$num_length = strlen($num);
-		$levels = (int) (($num_length + 2) / 3);
-		$max_length = $levels * 3;
-		$num = substr('00' . $num, -$max_length);
-		$num_levels = str_split($num, 3);
-
-		for ($i = 0; $i < count($num_levels); $i++) {
-			$levels--;
-			$hundreds = (int) ($num_levels[$i] / 100);
-			$hundreds = ($hundreds ? ' ' . $list1[$hundreds] . ' Hundred' . ( $hundreds == 1 ? '' : '' ) . ' ' : '');
-			$tens = (int) ($num_levels[$i] % 100);
-			$singles = '';
-			if ($tens < 20) {
-				$tens = ($tens ? ' ' . $list1[$tens] . ' ' : '' );
-			} else {
-				$tens = (int) ($tens / 10);
-				$tens = ' ' . $list2[$tens] . ' ';
-				$singles = (int) ($num_levels[$i] % 10);
-				$singles = ' ' . $list1[$singles] . ' ';
-			}
-		
-			$words[] = $hundreds . $tens . $singles . ( ( $levels && (int) ( $num_levels[$i] ) ) ? ' ' . $list3[$levels] . ' ' : '' );
-		}
-
-		$commas = count($words);
-		if($commas > 1) $commas--;
-
-		return implode(' ', $words) . ($fractions ? " and {$fractions}" : '');
 	}
 

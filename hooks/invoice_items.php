@@ -26,10 +26,6 @@
 	*/
 
 	function invoice_items_init(&$options, $memberInfo, &$args) {
-		/* Inserted by Search Page Maker for AppGini on 2020-11-25 06:38:04 */
-		$options->FilterPage = 'hooks/invoice_items_filter.php';
-		/* End of Search Page Maker for AppGini code */
-
 
 		return TRUE;
 	}
@@ -143,7 +139,7 @@
 	 * An associative array where the keys are field names and the values are the field data values to be inserted into the new record.
 	 * Note: if a field is set as read-only or hidden in detail view, it can't be modified through $data. You should use a direct SQL statement instead.
 	 * For this table, the array items are: 
-	 *     $data['item'], $data['unit_price'], $data['qty']
+	 *     $data['item'], $data['current_price'], $data['unit_price'], $data['qty']
 	 * $data array is passed by reference so that modifications to it apply to the insert query.
 	 * 
 	 * @param $memberInfo
@@ -168,7 +164,7 @@
 	 * @param $data
 	 * An associative array where the keys are field names and the values are the field data values that were inserted into the new record.
 	 * For this table, the array items are: 
-	 *     $data['invoice'], $data['item'], $data['catalog_price'], $data['unit_price'], $data['qty'], $data['price']
+	 *     $data['invoice'], $data['item'], $data['current_price'], $data['catalog_price'], $data['unit_price'], $data['qty'], $data['price']
 	 * Also includes the item $data['selectedID'] which stores the value of the primary key for the new record.
 	 * 
 	 * @param $memberInfo
@@ -195,7 +191,7 @@
 	 * An associative array where the keys are field names and the values are the field data values.
 	 * Note: if a field is set as read-only or hidden in detail view, it can't be modified through $data. You should use a direct SQL statement instead.
 	 * For this table, the array items are: 
-	 *     $data['item'], $data['unit_price'], $data['qty']
+	 *     $data['item'], $data['current_price'], $data['unit_price'], $data['qty']
 	 * Also includes the item $data['selectedID'] which stores the value of the primary key for the record to be updated.
 	 * $data array is passed by reference so that modifications to it apply to the update query.
 	 * 
@@ -221,7 +217,7 @@
 	 * @param $data
 	 * An associative array where the keys are field names and the values are the field data values.
 	 * For this table, the array items are: 
-	 *     $data['id'], $data['invoice'], $data['item'], $data['catalog_price'], $data['unit_price'], $data['qty'], $data['price']
+	 *     $data['id'], $data['invoice'], $data['item'], $data['current_price'], $data['catalog_price'], $data['unit_price'], $data['qty'], $data['price']
 	 * Also includes the item $data['selectedID'] which stores the value of the primary key for the record.
 	 * 
 	 * @param $memberInfo
@@ -339,17 +335,17 @@
 	 * 
 	 * @return
 	 * A 2D array describing custom record actions. The format of the array is:
-	 *   array(
-	 *      array(
+	 *   [
+	 *      [
 	 *         'title' => 'Title', // the title/label of the custom action as displayed to users
 	 *         'function' => 'js_function_name', // the name of a javascript function to be executed when user selects this action
 	 *         'class' => 'CSS class(es) to apply to the action title', // optional, refer to Bootstrap documentation for CSS classes
 	 *         'icon' => 'icon name' // optional, refer to Bootstrap glyphicons for supported names
-	 *      ), ...
-	 *   )
+	 *      ], ...
+	 *   ]
 	*/
 
 	function invoice_items_batch_actions(&$args) {
 
-		return array();
+		return [];
 	}

@@ -243,7 +243,9 @@
 				`case_external` VARCHAR(128) NULL,
 				`case_subject` VARCHAR(255) NULL,
 				`case_description` LONGTEXT NULL
-			) CHARSET utf8"
+			) CHARSET utf8", [
+				" ALTER TABLE `supportcase` CHANGE `case_openedby` `case_openedby` VARCHAR(40) NULL ",
+			]
 		);
 		setupIndexes('supportcase', ['case_client','case_call',]);
 
@@ -256,9 +258,7 @@
 				`sc_noteauthor` VARCHAR(40) NULL,
 				`sc_notecase` INT NULL,
 				`sc_notedetails` LONGTEXT NULL
-			) CHARSET utf8", [
-				" ALTER TABLE `supportcase_notes` CHANGE `sc_noteauthor` `sc_noteauthor` VARCHAR(40) NULL ",
-			]
+			) CHARSET utf8"
 		);
 		setupIndexes('supportcase_notes', ['sc_notecase',]);
 

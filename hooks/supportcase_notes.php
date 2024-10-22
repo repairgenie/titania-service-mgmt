@@ -139,7 +139,7 @@
 	 * An associative array where the keys are field names and the values are the field data values to be inserted into the new record.
 	 * Note: if a field is set as read-only or hidden in detail view, it can't be modified through $data. You should use a direct SQL statement instead.
 	 * For this table, the array items are: 
-	 *     $data['sc_noteauthor'], $data['sc_notecase'], $data['sc_notedetails']
+	 *     $data['sc_notecase'], $data['sc_notedetails']
 	 * $data array is passed by reference so that modifications to it apply to the insert query.
 	 * 
 	 * @param $memberInfo
@@ -191,7 +191,7 @@
 	 * An associative array where the keys are field names and the values are the field data values.
 	 * Note: if a field is set as read-only or hidden in detail view, it can't be modified through $data. You should use a direct SQL statement instead.
 	 * For this table, the array items are: 
-	 *     $data['sc_noteID'], $data['sc_noteauthor'], $data['sc_notecase'], $data['sc_notedetails']
+	 *     $data['sc_noteID'], $data['sc_notecase'], $data['sc_notedetails']
 	 * Also includes the item $data['selectedID'] which stores the value of the primary key for the record to be updated.
 	 * $data array is passed by reference so that modifications to it apply to the update query.
 	 * 

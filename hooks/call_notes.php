@@ -139,7 +139,7 @@
 	 * An associative array where the keys are field names and the values are the field data values to be inserted into the new record.
 	 * Note: if a field is set as read-only or hidden in detail view, it can't be modified through $data. You should use a direct SQL statement instead.
 	 * For this table, the array items are: 
-	 *     $data['callnote_note'], $data['field5']
+	 *     $data['callnote_call'], $data['callnote_note']
 	 * $data array is passed by reference so that modifications to it apply to the insert query.
 	 * 
 	 * @param $memberInfo
@@ -164,7 +164,7 @@
 	 * @param $data
 	 * An associative array where the keys are field names and the values are the field data values that were inserted into the new record.
 	 * For this table, the array items are: 
-	 *     $data['callnote_datetime'], $data['callnote_loggedby'], $data['callnote_note'], $data['field5']
+	 *     $data['callnote_call'], $data['callnote_datetime'], $data['callnote_loggedby'], $data['callnote_note']
 	 * Also includes the item $data['selectedID'] which stores the value of the primary key for the new record.
 	 * 
 	 * @param $memberInfo
@@ -191,7 +191,7 @@
 	 * An associative array where the keys are field names and the values are the field data values.
 	 * Note: if a field is set as read-only or hidden in detail view, it can't be modified through $data. You should use a direct SQL statement instead.
 	 * For this table, the array items are: 
-	 *     $data['callnote_ID'], $data['callnote_note'], $data['field5']
+	 *     $data['callnote_call'], $data['callnote_ID'], $data['callnote_note']
 	 * Also includes the item $data['selectedID'] which stores the value of the primary key for the record to be updated.
 	 * $data array is passed by reference so that modifications to it apply to the update query.
 	 * 
@@ -217,7 +217,7 @@
 	 * @param $data
 	 * An associative array where the keys are field names and the values are the field data values.
 	 * For this table, the array items are: 
-	 *     $data['callnote_ID'], $data['callnote_datetime'], $data['callnote_loggedby'], $data['callnote_note'], $data['field5']
+	 *     $data['callnote_call'], $data['callnote_ID'], $data['callnote_datetime'], $data['callnote_loggedby'], $data['callnote_note']
 	 * Also includes the item $data['selectedID'] which stores the value of the primary key for the record.
 	 * 
 	 * @param $memberInfo

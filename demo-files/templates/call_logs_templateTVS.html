@@ -1,0 +1,15 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the call_logs_init() hook (in hooks/call_logs.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="call_logs-call_ID-<%%VALUE(call_ID)%%>" class="call_logs-call_ID text-right"><%%VALUE(call_ID)%%></td>
+		<td id="call_logs-call_datetime-<%%VALUE(call_ID)%%>" class="call_logs-call_datetime"><%%VALUE(call_datetime)%%></td>
+		<td id="call_logs-call_loggedby-<%%VALUE(call_ID)%%>" class="call_logs-call_loggedby"><%%VALUE(call_loggedby)%%></td>
+		<td id="call_logs-call_client-<%%VALUE(call_ID)%%>" class="call_logs-call_client"><%%VALUE(call_client)%%></td>
+		<td id="call_logs-call_workorder-<%%VALUE(call_ID)%%>" class="call_logs-call_workorder"><%%VALUE(call_workorder)%%></td>
+		<td id="call_logs-call_asset-<%%VALUE(call_ID)%%>" class="call_logs-call_asset"><%%VALUE(call_asset)%%></td>
+		<td id="call_logs-call_invoice-<%%VALUE(call_ID)%%>" class="call_logs-call_invoice"><%%VALUE(call_invoice)%%></td>
+		<td id="call_logs-call_logentry-<%%VALUE(call_ID)%%>" class="call_logs-call_logentry"><%%VALUE(call_logentry)%%></td>

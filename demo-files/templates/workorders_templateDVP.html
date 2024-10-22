@@ -1,0 +1,128 @@
+<!-- Edit this file to change the layout of the detail view print preview page -->
+
+
+<div class="panel-heading"><h3 class="panel-title">
+	<strong><%%DETAIL_VIEW_TITLE%%></strong>
+	<div class="hidden-print pull-right">
+		<div class="btn-group">
+			<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> <%%TRANSLATION(Print)%%></button>
+			<button type="submit" id="back" title="<%%TRANSLATION(Cancel Printing)%%>" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> <%%TRANSLATION(Cancel Printing)%%></button>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</h3></div>
+
+<div class="panel-body">
+	<fieldset class="form-horizontal">
+		<!-- Field: Work Order ID -->
+		<div class="form-group workorders-wo_ID" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Work Order ID</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wo_ID)%%></div>
+			</div>
+		</div>
+		<!-- Field: Created By -->
+		<div class="form-group workorders-wo_createdby" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Created By</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wo_createdby)%%></div>
+			</div>
+		</div>
+		<!-- Field: Date Created -->
+		<div class="form-group workorders-wo_datecreated" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Date Created</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wo_datecreated)%%></div>
+			</div>
+		</div>
+		<!-- Field: Status -->
+		<div class="form-group workorders-wo_Status" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Status</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(wo_Status)%%></div>
+			</div>
+		</div>
+		<!-- Field: Assigned to Tech -->
+		<div class="form-group workorders-wo_assignedto" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Assigned to Tech</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="wo_assignedto<%%RND1%%>"><%%COMBOTEXT(wo_assignedto)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Client -->
+		<div class="form-group workorders-wo_client" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Client</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="wo_client<%%RND1%%>"><%%COMBOTEXT(wo_client)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Ticket/Reference Number -->
+		<div class="form-group workorders-wo_ticket" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Ticket/Reference Number</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wo_ticket)%%></div>
+			</div>
+		</div>
+		<!-- Field: Client Asset/Device -->
+		<div class="form-group workorders-wo_asset" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Client Asset/Device</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="wo_asset<%%RND1%%>"><%%COMBOTEXT(wo_asset)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Title -->
+		<div class="form-group workorders-wo_Title" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Title</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wo_Title)%%></div>
+			</div>
+		</div>
+		<!-- Field: Description of Issue -->
+		<div class="form-group workorders-wo_Description" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Description of Issue</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wo_Description)%%></div>
+			</div>
+		</div>
+	</fieldset>
+</div>
+<script>
+	$j(function() {
+		// render read-only checkboxes in DVP
+		$j('form input[type=checkbox]:not(.hidden):checked')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-check"></i>');
+		$j('form input[type=checkbox]:not(.hidden):not(:checked)')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-unchecked"></i>')
+	})
+</script>
+<!-- child records -->
+<div class="panel-body">
+	<div id="workorders-children"></div>
+</div>
+
+<script>
+	$j(function() {
+		/* prevent loading child records in multiple DVP */
+		if($j('[id=workorders-children]').length > 1) return;
+
+		post(
+			'parent-children.php', {
+				ParentTable: 'workorders',
+				SelectedID: '<%%VALUE(wo_ID)%%>',
+				Operation: 'show-children-printable'
+			},
+			'workorders-children',
+			'disable-element',
+			'loading-element',
+			apply_persisting_children
+		);
+
+		$j('form').on('click', '#children-tabs button[data-target]', function() {
+			$j(this).toggleClass('active');
+			persist_expanded_child($j(this).attr('id'));
+		});
+	})
+</script>
+

@@ -1,0 +1,16 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the supportcase_init() hook (in hooks/supportcase.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="supportcase-case_number-<%%VALUE(case_ID)%%>" class="supportcase-case_number"><%%SELECT%%><%%VALUE(case_number)%%><%%ENDSELECT%%></td>
+		<td id="supportcase-case_status-<%%VALUE(case_ID)%%>" class="supportcase-case_status"><%%SELECT%%><%%VALUE(case_status)%%><%%ENDSELECT%%></td>
+		<td id="supportcase-case_client-<%%VALUE(case_ID)%%>" class="supportcase-case_client"><%%SELECT%%><%%VALUE(case_client)%%><%%ENDSELECT%%></td>
+		<td id="supportcase-case_call-<%%VALUE(case_ID)%%>" class="supportcase-case_call"><%%SELECT%%><%%VALUE(case_call)%%><%%ENDSELECT%%></td>
+		<td id="supportcase-case_datetime-<%%VALUE(case_ID)%%>" class="supportcase-case_datetime"><%%SELECT%%><%%VALUE(case_datetime)%%><%%ENDSELECT%%></td>
+		<td id="supportcase-case_openedby-<%%VALUE(case_ID)%%>" class="supportcase-case_openedby"><%%SELECT%%><%%VALUE(case_openedby)%%><%%ENDSELECT%%></td>
+		<td id="supportcase-case_external-<%%VALUE(case_ID)%%>" class="supportcase-case_external"><%%SELECT%%><%%VALUE(case_external)%%><%%ENDSELECT%%></td>
+		<td id="supportcase-case_subject-<%%VALUE(case_ID)%%>" class="supportcase-case_subject"><%%SELECT%%><%%VALUE(case_subject)%%><%%ENDSELECT%%></td>
+		<td id="supportcase-case_description-<%%VALUE(case_ID)%%>" class="supportcase-case_description"><%%SELECT%%><%%VALUE(case_description)%%><%%ENDSELECT%%></td>

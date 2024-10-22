@@ -1,0 +1,121 @@
+<!-- Edit this file to change the layout of the detail view print preview page -->
+
+
+<div class="panel-heading"><h3 class="panel-title">
+	<strong><%%DETAIL_VIEW_TITLE%%></strong>
+	<div class="hidden-print pull-right">
+		<div class="btn-group">
+			<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> <%%TRANSLATION(Print)%%></button>
+			<button type="submit" id="back" title="<%%TRANSLATION(Cancel Printing)%%>" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> <%%TRANSLATION(Cancel Printing)%%></button>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</h3></div>
+
+<div class="panel-body">
+	<fieldset class="form-horizontal">
+		<!-- Field: Case Number -->
+		<div class="form-group supportcase-case_number" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Case Number</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(case_number)%%></div>
+			</div>
+		</div>
+		<!-- Field: Status -->
+		<div class="form-group supportcase-case_status" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Status</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(case_status)%%></div>
+			</div>
+		</div>
+		<!-- Field: Client -->
+		<div class="form-group supportcase-case_client" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Client</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="case_client<%%RND1%%>"><%%COMBOTEXT(case_client)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Related Call -->
+		<div class="form-group supportcase-case_call" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Related Call</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="case_call<%%RND1%%>"><%%COMBOTEXT(case_call)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Date/Time Opened:  -->
+		<div class="form-group supportcase-case_datetime" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Date/Time Opened: </label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(case_datetime)%%></div>
+			</div>
+		</div>
+		<!-- Field: Opened By:  -->
+		<div class="form-group supportcase-case_openedby" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Opened By: </label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(case_openedby)%%></div>
+			</div>
+		</div>
+		<!-- Field: External/Vendor Ticket Dispatch Number -->
+		<div class="form-group supportcase-case_external" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">External/Vendor Ticket Dispatch Number</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(case_external)%%></div>
+			</div>
+		</div>
+		<!-- Field: Subject/Short Description -->
+		<div class="form-group supportcase-case_subject" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Subject/Short Description</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(case_subject)%%></div>
+			</div>
+		</div>
+		<!-- Field: Case description -->
+		<div class="form-group supportcase-case_description" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Case description</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(case_description)%%></div>
+			</div>
+		</div>
+	</fieldset>
+</div>
+<script>
+	$j(function() {
+		// render read-only checkboxes in DVP
+		$j('form input[type=checkbox]:not(.hidden):checked')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-check"></i>');
+		$j('form input[type=checkbox]:not(.hidden):not(:checked)')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-unchecked"></i>')
+	})
+</script>
+<!-- child records -->
+<div class="panel-body">
+	<div id="supportcase-children"></div>
+</div>
+
+<script>
+	$j(function() {
+		/* prevent loading child records in multiple DVP */
+		if($j('[id=supportcase-children]').length > 1) return;
+
+		post(
+			'parent-children.php', {
+				ParentTable: 'supportcase',
+				SelectedID: '<%%VALUE(case_ID)%%>',
+				Operation: 'show-children-printable'
+			},
+			'supportcase-children',
+			'disable-element',
+			'loading-element',
+			apply_persisting_children
+		);
+
+		$j('form').on('click', '#children-tabs button[data-target]', function() {
+			$j(this).toggleClass('active');
+			persist_expanded_child($j(this).attr('id'));
+		});
+	})
+</script>
+

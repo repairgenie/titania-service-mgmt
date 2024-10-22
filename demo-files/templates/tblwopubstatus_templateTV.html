@@ -1,0 +1,11 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tblwopubstatus_init() hook (in hooks/tblwopubstatus.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tblwopubstatus-wopub_WO-<%%VALUE(wopub_ID)%%>" class="tblwopubstatus-wopub_WO"><%%SELECT%%><%%VALUE(wopub_WO)%%><%%ENDSELECT%%></td>
+		<td id="tblwopubstatus-wopub_Updated-<%%VALUE(wopub_ID)%%>" class="tblwopubstatus-wopub_Updated"><%%SELECT%%><%%VALUE(wopub_Updated)%%><%%ENDSELECT%%></td>
+		<td id="tblwopubstatus-wopub_status-<%%VALUE(wopub_ID)%%>" class="tblwopubstatus-wopub_status"><%%SELECT%%><%%VALUE(wopub_status)%%><%%ENDSELECT%%></td>
+		<td id="tblwopubstatus-wopub_Comments-<%%VALUE(wopub_ID)%%>" class="tblwopubstatus-wopub_Comments"><%%SELECT%%><%%VALUE(wopub_Comments)%%><%%ENDSELECT%%></td>

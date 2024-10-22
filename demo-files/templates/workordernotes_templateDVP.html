@@ -1,0 +1,71 @@
+<!-- Edit this file to change the layout of the detail view print preview page -->
+
+
+<div class="panel-heading"><h3 class="panel-title">
+	<strong><%%DETAIL_VIEW_TITLE%%></strong>
+	<div class="hidden-print pull-right">
+		<div class="btn-group">
+			<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> <%%TRANSLATION(Print)%%></button>
+			<button type="submit" id="back" title="<%%TRANSLATION(Cancel Printing)%%>" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> <%%TRANSLATION(Cancel Printing)%%></button>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</h3></div>
+
+<div class="panel-body">
+	<fieldset class="form-horizontal">
+		<!-- Field: Work Order -->
+		<div class="form-group workordernotes-wonote_wo" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Work Order</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="wonote_wo<%%RND1%%>"><%%COMBOTEXT(wonote_wo)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: Wonote note -->
+		<div class="form-group workordernotes-wonote_note" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Wonote note</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wonote_note)%%></div>
+			</div>
+		</div>
+		<!-- Field: Wonote author -->
+		<div class="form-group workordernotes-wonote_author" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Wonote author</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wonote_author)%%></div>
+			</div>
+		</div>
+		<!-- Field: Wonote timestamp -->
+		<div class="form-group workordernotes-wonote_timestamp" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Wonote timestamp</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wonote_timestamp)%%></div>
+			</div>
+		</div>
+		<!-- Field: Wonote editor -->
+		<div class="form-group workordernotes-wonote_editor" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Wonote editor</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wonote_editor)%%></div>
+			</div>
+		</div>
+		<!-- Field: Wonote editorts -->
+		<div class="form-group workordernotes-wonote_editorts" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Wonote editorts</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(wonote_editorts)%%></div>
+			</div>
+		</div>
+	</fieldset>
+</div>
+<script>
+	$j(function() {
+		// render read-only checkboxes in DVP
+		$j('form input[type=checkbox]:not(.hidden):checked')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-check"></i>');
+		$j('form input[type=checkbox]:not(.hidden):not(:checked)')
+			.addClass('hidden')
+			.after('<i class="glyphicon glyphicon-unchecked"></i>')
+	})
+</script>

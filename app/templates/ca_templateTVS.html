@@ -1,0 +1,14 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the ca_init() hook (in hooks/ca.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="ca-code-<%%VALUE(id)%%>" class="ca-code"><%%VALUE(code)%%></td>
+		<td id="ca-status-<%%VALUE(id)%%>" class="ca-status"><%%VALUE(status)%%></td>
+		<td id="ca-date_due-<%%VALUE(id)%%>" class="ca-date_due"><%%VALUE(date_due)%%></td>
+		<td id="ca-client-<%%VALUE(id)%%>" class="ca-client"><%%VALUE(client)%%></td>
+		<td id="ca-client_contact-<%%VALUE(id)%%>" class="ca-client_contact"><%%VALUE(client_contact)%%></td>
+		<td id="ca-client_phone-<%%VALUE(id)%%>" class="ca-client_phone"><%%VALUE(client_phone)%%></td>
+		<td id="ca-total-<%%VALUE(id)%%>" class="ca-total text-right"><%%VALUE(total)%%></td>

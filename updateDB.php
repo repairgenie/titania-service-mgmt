@@ -243,9 +243,7 @@
 				`case_external` VARCHAR(128) NULL,
 				`case_subject` VARCHAR(255) NULL,
 				`case_description` LONGTEXT NULL
-			) CHARSET utf8", [
-				" ALTER TABLE `supportcase` CHANGE `case_openedby` `case_openedby` VARCHAR(40) NULL ",
-			]
+			) CHARSET utf8"
 		);
 		setupIndexes('supportcase', ['case_client','case_call',]);
 

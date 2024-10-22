@@ -474,7 +474,7 @@
 					'parent-primary-key' => 'case_ID',
 					'child-primary-key' => 'sc_noteID',
 					'child-primary-key-index' => 0,
-					'tab-label' => 'Supportcase notes <span class="hidden child-label-supportcase_notes child-field-caption">(Related Case)</span>',
+					'tab-label' => 'Activity Stream <span class="hidden child-label-supportcase_notes child-field-caption">(Related Case)</span>',
 					'auto-close' => true,
 					'table-icon' => 'table.gif',
 					'display-refresh' => true,

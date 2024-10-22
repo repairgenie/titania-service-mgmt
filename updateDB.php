@@ -243,41 +243,7 @@
 				`case_external` VARCHAR(128) NULL,
 				`case_subject` VARCHAR(255) NULL,
 				`case_description` LONGTEXT NULL
-			) CHARSET utf8", [
-				"ALTER TABLE `table15` RENAME `supportcase`",
-				"UPDATE `membership_userrecords` SET `tableName`='supportcase' WHERE `tableName`='table15'",
-				"UPDATE `membership_userpermissions` SET `tableName`='supportcase' WHERE `tableName`='table15'",
-				"UPDATE `membership_grouppermissions` SET `tableName`='supportcase' WHERE `tableName`='table15'",
-				"ALTER TABLE supportcase ADD `field1` VARCHAR(40)",
-				"ALTER TABLE `supportcase` CHANGE `field1` `case_ID` VARCHAR(40) NULL ",
-				"ALTER TABLE `supportcase` CHANGE `case_ID` `case_ID` VARCHAR(40) NOT NULL ",
-				" ALTER TABLE `supportcase` CHANGE `case_ID` `case_ID` INT NOT NULL ",
-				" ALTER TABLE `supportcase` CHANGE `case_ID` `case_ID` INT NOT NULL AUTO_INCREMENT ",
-				"ALTER TABLE supportcase ADD `field2` VARCHAR(40)",
-				"ALTER TABLE `supportcase` CHANGE `field2` `case_number` VARCHAR(40) NULL ",
-				" ALTER TABLE `supportcase` CHANGE `case_number` `case_number` VARCHAR(40) NULL ",
-				"ALTER TABLE supportcase ADD `field3` VARCHAR(40)",
-				"ALTER TABLE `supportcase` CHANGE `field3` `case_client` VARCHAR(40) NULL ",
-				"ALTER TABLE supportcase ADD `field4` VARCHAR(40)",
-				"ALTER TABLE `supportcase` CHANGE `field4` `case_status` VARCHAR(40) NULL ",
-				"ALTER TABLE supportcase ADD `field5` VARCHAR(40)",
-				"ALTER TABLE `supportcase` CHANGE `field5` `case_call` VARCHAR(40) NULL ",
-				"ALTER TABLE supportcase ADD `field6` VARCHAR(40)",
-				"ALTER TABLE `supportcase` CHANGE `field6` `case_datetime` VARCHAR(40) NULL ",
-				" ALTER TABLE `supportcase` CHANGE `case_datetime` `case_datetime` VARCHAR(40) NULL ",
-				"ALTER TABLE supportcase ADD `field7` VARCHAR(40)",
-				"ALTER TABLE `supportcase` CHANGE `field7` `case_openedby` VARCHAR(40) NULL ",
-				"ALTER TABLE supportcase ADD `field8` VARCHAR(40)",
-				"ALTER TABLE `supportcase` CHANGE `field8` `case_subject` VARCHAR(40) NULL ",
-				" ALTER TABLE `supportcase` CHANGE `case_subject` `case_subject` VARCHAR(255) NULL ",
-				"ALTER TABLE supportcase ADD `field9` VARCHAR(40)",
-				"ALTER TABLE `supportcase` CHANGE `field9` `case_description` VARCHAR(40) NULL ",
-				"ALTER TABLE supportcase ADD `field10` VARCHAR(40)",
-				"ALTER TABLE `supportcase` CHANGE `field10` `case_external` VARCHAR(40) NULL ",
-				" ALTER TABLE `supportcase` CHANGE `case_external` `case_external` VARCHAR(128) NULL ",
-				" ALTER TABLE `supportcase` CHANGE `case_description` `case_description` LONGTEXT NULL ",
-				"ALTER TABLE `supportcase` ADD PRIMARY KEY (`case_ID`)",
-			]
+			) CHARSET utf8"
 		);
 		setupIndexes('supportcase', ['case_client','case_call',]);
 
@@ -291,26 +257,7 @@
 				`sc_notecase` INT NULL,
 				`sc_notedetails` LONGTEXT NULL
 			) CHARSET utf8", [
-				"ALTER TABLE `table16` RENAME `supportcase_notes`",
-				"UPDATE `membership_userrecords` SET `tableName`='supportcase_notes' WHERE `tableName`='table16'",
-				"UPDATE `membership_userpermissions` SET `tableName`='supportcase_notes' WHERE `tableName`='table16'",
-				"UPDATE `membership_grouppermissions` SET `tableName`='supportcase_notes' WHERE `tableName`='table16'",
-				"ALTER TABLE supportcase_notes ADD `field1` VARCHAR(40)",
-				"ALTER TABLE `supportcase_notes` CHANGE `field1` `sc_noteID` VARCHAR(40) NULL ",
-				" ALTER TABLE `supportcase_notes` CHANGE `sc_noteID` `sc_noteID` INT NULL ",
-				"ALTER TABLE `supportcase_notes` CHANGE `sc_noteID` `sc_noteID` INT NOT NULL ",
-				" ALTER TABLE `supportcase_notes` CHANGE `sc_noteID` `sc_noteID` INT NOT NULL AUTO_INCREMENT ",
-				"ALTER TABLE supportcase_notes ADD `field2` VARCHAR(40)",
-				"ALTER TABLE `supportcase_notes` CHANGE `field2` `sc_notedatetime` VARCHAR(40) NULL ",
-				" ALTER TABLE `supportcase_notes` CHANGE `sc_notedatetime` `sc_notedatetime` VARCHAR(40) NULL ",
-				"ALTER TABLE supportcase_notes ADD `field3` VARCHAR(40)",
-				"ALTER TABLE `supportcase_notes` CHANGE `field3` `sc_noteauthor` VARCHAR(40) NULL ",
-				"ALTER TABLE supportcase_notes ADD `field4` VARCHAR(40)",
-				"ALTER TABLE `supportcase_notes` CHANGE `field4` `sc_notecase` VARCHAR(40) NULL ",
-				"ALTER TABLE supportcase_notes ADD `field5` VARCHAR(40)",
-				"ALTER TABLE `supportcase_notes` CHANGE `field5` `sc_notedetails` VARCHAR(40) NULL ",
-				" ALTER TABLE `supportcase_notes` CHANGE `sc_notedetails` `sc_notedetails` LONGTEXT NULL ",
-				"ALTER TABLE `supportcase_notes` ADD PRIMARY KEY (`sc_noteID`)",
+				" ALTER TABLE `supportcase_notes` CHANGE `sc_noteauthor` `sc_noteauthor` VARCHAR(40) NULL ",
 			]
 		);
 		setupIndexes('supportcase_notes', ['sc_notecase',]);

@@ -14,7 +14,7 @@ function supportcase_notes_insert(&$error_message = '') {
 
 	$data = [
 		'sc_notedatetime' => parseCode('<%%creationDateTime%%>', true),
-		'sc_noteauthor' => Request::val('sc_noteauthor', ''),
+		'sc_noteauthor' => parseCode('<%%creatorUsername%%>', true),
 		'sc_notecase' => Request::lookup('sc_notecase', ''),
 		'sc_notedetails' => br2nl(Request::val('sc_notedetails', '')),
 	];
@@ -112,7 +112,6 @@ function supportcase_notes_update(&$selected_id, &$error_message = '') {
 	if(!check_record_permission('supportcase_notes', $selected_id, 'edit')) return false;
 
 	$data = [
-		'sc_noteauthor' => Request::val('sc_noteauthor', ''),
 		'sc_notecase' => Request::lookup('sc_notecase', ''),
 		'sc_notedetails' => br2nl(Request::val('sc_notedetails', '')),
 	];
@@ -345,7 +344,7 @@ function supportcase_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInser
 	}
 
 	// process form title
-	$templateCode = str_replace('<%%DETAIL_VIEW_TITLE%%>', 'Supportcase note details', $templateCode);
+	$templateCode = str_replace('<%%DETAIL_VIEW_TITLE%%>', 'Activity Stream', $templateCode);
 	$templateCode = str_replace('<%%RND1%%>', $rnd1, $templateCode);
 	$templateCode = str_replace('<%%EMBEDDED%%>', (Request::val('Embedded') ? 'Embedded=1' : ''), $templateCode);
 	// process buttons
@@ -411,7 +410,6 @@ function supportcase_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInser
 	// set records to read only if user can't insert new records and can't edit current record
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)) {
 		$jsReadOnly = '';
-		$jsReadOnly .= "\tjQuery('#sc_noteauthor').replaceWith('<div class=\"form-control-static\" id=\"sc_noteauthor\">' + (jQuery('#sc_noteauthor').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#sc_notecase').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#sc_notecase_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#sc_notedetails').replaceWith('<div class=\"form-control-static\" id=\"sc_notedetails\">' + (jQuery('#sc_notedetails').val() || '') + '</div>');\n";
@@ -458,8 +456,7 @@ function supportcase_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInser
 		$templateCode = str_replace('<%%URLVALUE(sc_noteID)%%>', urlencode($urow['sc_noteID']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(sc_notedatetime)%%>', safe_html($urow['sc_notedatetime']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(sc_notedatetime)%%>', urlencode($urow['sc_notedatetime']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(sc_noteauthor)%%>', safe_html($urow['sc_noteauthor']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(sc_noteauthor)%%>', html_attr($row['sc_noteauthor']), $templateCode);
+		$templateCode = str_replace('<%%VALUE(sc_noteauthor)%%>', safe_html($urow['sc_noteauthor']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(sc_noteauthor)%%>', urlencode($urow['sc_noteauthor']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(sc_notecase)%%>', safe_html($urow['sc_notecase']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(sc_notecase)%%>', html_attr($row['sc_notecase']), $templateCode);
@@ -475,8 +472,8 @@ function supportcase_notes_form($selected_id = '', $AllowUpdate = 1, $AllowInser
 		$templateCode = str_replace('<%%URLVALUE(sc_noteID)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(sc_notedatetime)%%>', '<%%creationDateTime%%>', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(sc_notedatetime)%%>', urlencode('<%%creationDateTime%%>'), $templateCode);
-		$templateCode = str_replace('<%%VALUE(sc_noteauthor)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(sc_noteauthor)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(sc_noteauthor)%%>', '<%%creatorUsername%%>', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(sc_noteauthor)%%>', urlencode('<%%creatorUsername%%>'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(sc_notecase)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(sc_notecase)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(sc_notedetails)%%>', '', $templateCode);

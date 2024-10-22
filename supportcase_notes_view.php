@@ -85,7 +85,7 @@
 	$x->QuickSearch = 1;
 	$x->QuickSearchText = $Translation['quick search'];
 	$x->ScriptFileName = 'supportcase_notes_view.php';
-	$x->TableTitle = 'Supportcase notes';
+	$x->TableTitle = 'Activity Stream';
 	$x->TableIcon = 'table.gif';
 	$x->PrimaryKey = '`supportcase_notes`.`sc_noteID`';
 

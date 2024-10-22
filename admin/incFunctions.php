@@ -212,7 +212,7 @@
 					'homepageShowCount' => 0
 				],
 				'supportcase_notes' => [
-					'Caption' => 'Supportcase notes',
+					'Caption' => 'Activity Stream',
 					'Description' => '',
 					'tableIcon' => 'table.gif',
 					'group' => $tg[4],
@@ -249,7 +249,7 @@
 			'call_logs' => ['Call Logs', '', 'table.gif', 'Call Management'],
 			'call_notes' => ['Call Notes', '', 'table.gif', 'Call Management'],
 			'supportcase' => ['Support Cases', '', 'table.gif', 'Call Management'],
-			'supportcase_notes' => ['Supportcase notes', '', 'table.gif', 'Call Management'],
+			'supportcase_notes' => ['Activity Stream', '', 'table.gif', 'Call Management'],
 		];
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 

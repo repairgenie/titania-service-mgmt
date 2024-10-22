@@ -40,9 +40,9 @@
 				<!-- Field: Created By:  -->
 				<div class="form-group supportcase_notes-sc_noteauthor">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3" for="sc_noteauthor">Created By: </label>
+					<label class="control-label col-lg-3">Created By: </label>
 					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="sc_noteauthor" id="sc_noteauthor" value="<%%VALUE(sc_noteauthor)%%>">
+						<div class="form-control-static" id="sc_noteauthor"><%%VALUE(sc_noteauthor)%%></div>
 					</div>
 				</div>
 
@@ -105,9 +105,27 @@
 			/* enable DV action buttons to float on scrolling down the form */
 			enable_dvab_floating();
 
-			$j('#supportcase_notes_dv_container-loading').addClass('hidden');
-			$j('#supportcase_notes_dv_container').removeClass('hidden');
-			if(!$j('.table_view').length || $j('[name=SelectedID]').val().length) AppGini.focusFormElement('supportcase_notes', 'sc_noteauthor');
+			if(!$j('.table_view').length || $j('[name=SelectedID]').val().length) {
+				AppGini.once({
+					condition: function() {
+						return $j('.form-group.supportcase_notes-sc_notecase')
+									.find('.nicEdit-main, .select2-container, input[type=radio]')
+									.length > 0
+								// or read-only DV
+								|| (!$j('#update').length && !$j('#insert').length);
+					},
+					action: function() {
+						$j('#supportcase_notes_dv_container-loading').addClass('hidden');
+						$j('#supportcase_notes_dv_container').removeClass('hidden');
+						AppGini.focusFormElement('supportcase_notes', 'sc_notecase');
+					},
+					timeout:  5000,
+					doActionOnTimeout:  true
+				});
+			} else {
+				$j('#supportcase_notes_dv_container-loading').addClass('hidden');
+				$j('#supportcase_notes_dv_container').removeClass('hidden');
+			}
 
 			$j('form').eq(0).change(function() {
 				if($j(this).data('already_changed')) return;

@@ -480,7 +480,7 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => [0 => 'Sc noteID', 1 => 'Created on:', 2 => 'Created By: ', 3 => 'Related Case', 4 => 'Details'],
+					'display-fields' => [0 => 'Event ID', 1 => 'Created on:', 2 => 'Created By: ', 3 => 'Related Case', 4 => 'Details'],
 					'display-field-names' => [0 => 'sc_noteID', 1 => 'sc_notedatetime', 2 => 'sc_noteauthor', 3 => 'sc_notecase', 4 => 'sc_notedetails'],
 					'sortable-fields' => [0 => '`supportcase_notes`.`sc_noteID`', 1 => 2, 2 => 3, 3 => 4, 4 => 5],
 					'records-per-page' => 10,

@@ -1909,7 +1909,7 @@
 					'sc_noteID' => [
 						'appgini' => "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
 						'info' => [
-							'caption' => 'Sc noteID',
+							'caption' => 'Event ID',
 							'description' => '',
 						],
 					],

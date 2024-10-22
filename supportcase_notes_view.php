@@ -43,7 +43,7 @@
 	];
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = [
-		"`supportcase_notes`.`sc_noteID`" => "Sc noteID",
+		"`supportcase_notes`.`sc_noteID`" => "Event ID",
 		"`supportcase_notes`.`sc_notedatetime`" => "Created on:",
 		"`supportcase_notes`.`sc_noteauthor`" => "Created By: ",
 		"IF(    CHAR_LENGTH(`supportcase1`.`case_number`) || CHAR_LENGTH(`supportcase1`.`case_subject`), CONCAT_WS('',   `supportcase1`.`case_number`, ' : ', `supportcase1`.`case_subject`), '') /* Related Case */" => "Related Case",
@@ -90,7 +90,7 @@
 	$x->PrimaryKey = '`supportcase_notes`.`sc_noteID`';
 
 	$x->ColWidth = [150, 150, 150, 150, 150, ];
-	$x->ColCaption = ['Sc noteID', 'Created on:', 'Created By: ', 'Related Case', 'Details', ];
+	$x->ColCaption = ['Event ID', 'Created on:', 'Created By: ', 'Related Case', 'Details', ];
 	$x->ColFieldName = ['sc_noteID', 'sc_notedatetime', 'sc_noteauthor', 'sc_notecase', 'sc_notedetails', ];
 	$x->ColNumber  = [1, 2, 3, 4, 5, ];
 
